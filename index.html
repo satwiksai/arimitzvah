@@ -5,280 +5,321 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ari's Bar Mitzvah</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --red:#E81828;
   --blue:#0E2A66;
   --green:#004C54;
+  --bg:#f6f4ef;
+  --ink:#111;
+  --glass:rgba(255,255,255,.6);
+  --glass-border:rgba(0,0,0,.08);
 }
 
-*{box-sizing:border-box;}
+/* ================= BASE ================= */
 
+*{box-sizing:border-box}
 body{
   margin:0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(232,24,40,.05), transparent 60%),
-    radial-gradient(circle at 80% 60%, rgba(0,76,84,.05), transparent 60%),
-    linear-gradient(#f7f6f2, #f1f1ef);
-  color:#111;
+  font-family:'Cormorant Garamond',serif;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
 }
 
-/* HEADER */
+/* subtle fixed texture */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.08;
+  background-image:
+    radial-gradient(rgba(0,0,0,.35) 1px, transparent 1px);
+  background-size:28px 28px;
+}
 
-.header{background:var(--blue);height:55px;}
+.wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+  height:46px;
+  background:#0c2555;
+}
+
 .stripes{
-  height:36px;
+  height:34px;
   background:
     linear-gradient(to bottom,
-      var(--red) 0px,var(--red) 10px,
-      white 10px,white 14px,
-      var(--green) 14px,var(--green) 24px,
-      white 24px,white 28px,
-      var(--red) 28px,var(--red) 36px
+      var(--red) 0 11px,
+      white 11px 14px,
+      var(--green) 14px 25px,
+      white 25px 28px,
+      var(--red) 28px 34px
     );
 }
 
-/* HERO */
-
-.hero-wrapper{display:flex;justify-content:center;}
+/* ================= HERO ================= */
 
 .hero{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:flex-end;
   gap:60px;
-  padding:60px 20px 110px;
-  max-width:1200px;
-  width:100%;
+  padding:44px 0 70px;
+  position:relative;
+  z-index:2;
 }
 
-.hero-text{flex:1;text-align:center;}
+.hero-left{
+  flex:1;
+  text-align:center;
+}
 
-.hero-title img{max-width:480px;width:100%;margin-bottom:28px;}
+.hero-accent{
+  width:150px;
+  margin:0 auto 16px;
+  display:grid;
+  gap:7px;
+}
+.hero-accent div{
+  height:4px;
+  border-radius:999px;
+}
+.hero-accent .r{
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+}
+.hero-accent .g{
+  width:70%;
+  justify-self:center;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);
+}
+
+.hero-title img{
+  width:min(520px,100%);
+  display:block;
+  margin:0 auto 12px;
+}
 
 .event-info{
-  font-family:'Cormorant Garamond', serif;
-  font-size:28px;
-  color:var(--blue);
+  font-size:clamp(20px,2.5vw,28px);
   line-height:1.6;
 }
 
-/* ROTATOR */
+.questions-link{
+  margin-top:12px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:800;
+  font-size:14px;
+}
+.questions-link a{
+  text-decoration:none;
+  color:var(--blue);
+  position:relative;
+}
+.questions-link a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-2px;
+  width:100%;
+  height:2px;
+  background:linear-gradient(90deg,var(--red),var(--green));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:.3s;
+}
+.questions-link a:hover::after{transform:scaleX(1)}
+
+/* ================= ROTATOR ================= */
 
 .rotator{
-  position:relative;
   width:480px;
-  height:460px;
+  height:520px;
+  position:relative;
+  overflow:visible;
+  transform:translateY(-8px);
 }
 
 .rotator img{
   position:absolute;
-  max-height:460px;
-  width:auto;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%) scale(1);
+  height:112%;
   opacity:0;
-  transform:scale(1);
-  filter: drop-shadow(0 25px 35px rgba(0,0,0,.25));
-  transition: opacity .8s ease-in-out, transform 2.5s ease-in-out;
+  transition:opacity .5s ease;
 }
 
 .rotator img.active{
   opacity:1;
-  transform:scale(1.08);
+  animation:kenburns 2.6s ease forwards;
 }
 
-/* OVERLAY NAV PANEL */
+@keyframes kenburns{
+  0%{transform:translateX(-50%) scale(1)}
+  100%{transform:translateX(calc(-50% + 8px)) scale(1.1)}
+}
 
-.overlay-features{
-  max-width:1100px;
-  margin:-150px auto 80px;
-  padding:50px 40px;
-  background:rgba(255,255,255,.65);
-  backdrop-filter:blur(10px);
-  border-radius:22px;
-  box-shadow:0 25px 55px rgba(0,0,0,.10);
+/* ================= NAV OVERLAY ================= */
+
+.nav-overlay{
+  margin:-150px auto 70px;
+  padding:40px;
+  border-radius:20px;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px);
+  position:relative;
+  z-index:5;
+}
+
+.nav-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:40px;
-  text-align:center;
+  gap:30px;
 }
 
-.feature-card{
+.nav-item{
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:14px;
 }
 
-.feature-card img{
-  height:clamp(130px,12vw,190px);
+.nav-logo-slot{
+  height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.nav-logo-slot img{
+  max-height:100%;
+  max-width:100%;
 }
 
-.feature-card button{
-  font-family:'Montserrat',sans-serif;
-  font-weight:700;
-  padding:14px 36px;
+.btn{
+  padding:12px 34px;
+  border-radius:14px;
+  border:0;
   background:var(--blue);
-  color:white;
-  border:none;
-  border-radius:10px;
+  color:#fff;
+  font-family:'Montserrat',sans-serif;
+  font-weight:900;
+  letter-spacing:1.5px;
   cursor:pointer;
-  font-size:15px;
 }
 
-/* CONTENT GRID */
+/* ================= MAIN ================= */
 
-.content{
+.main{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:60px;
-  max-width:1200px;
-  margin:80px auto;
-  padding:0 20px;
+  gap:56px;
+  padding-bottom:90px;
 }
 
-.section-title{
-  font-family:'Cormorant Garamond', serif;
-  font-size:32px;
-  color:var(--blue);
-  margin-bottom:18px;
+.panel-title{
+  font-size:34px;
+  margin-bottom:16px;
+}
+
+.card{
+  padding:18px;
+  border-radius:16px;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px);
 }
 
 iframe{
   width:100%;
-  height:920px;
-  border:none;
+  border:0;
   border-radius:12px;
-  box-shadow:0 18px 50px rgba(0,0,0,.14);
 }
 
-/* FAQ */
+.rsvp-fallback{
+  margin-top:14px;
+  text-align:center;
+  font-family:'Montserrat',sans-serif;
+  font-size:14px;
+}
+
+.rsvp-fallback a{
+  font-weight:900;
+  text-decoration:none;
+  color:var(--blue);
+}
+
+/* ================= FAQ ================= */
 
 .faq details{
-  margin-bottom:14px;
+  margin-bottom:12px;
   border-radius:12px;
   overflow:hidden;
   border:1px solid rgba(0,0,0,.08);
+  background:rgba(255,255,255,.85);
 }
-
 .faq summary{
-  cursor:pointer;
-  padding:16px;
+  padding:14px;
   font-family:'Montserrat',sans-serif;
-  font-weight:700;
-  background:rgba(240,240,240,.8);
+  font-weight:900;
+  cursor:pointer;
 }
-
-.faq .answer{
-  padding:16px;
-  font-family:'Cormorant Garamond',serif;
-  font-size:18px;
-  line-height:1.7;
-}
-
-/* MITZVAH */
-
-.mitzvah{
-  margin-top:30px;
-  padding:24px;
-  border-radius:14px;
-  background:rgba(255,255,255,.92);
-  box-shadow:0 16px 45px rgba(0,0,0,.12);
-  border-left:6px solid var(--green);
-}
-
-.mitzvah p{
-  font-family:'Cormorant Garamond',serif;
+.answer{
+  padding:14px 16px 18px;
   font-size:19px;
   line-height:1.7;
 }
 
-/* DOCKED ROTATOR */
-
-.docked-rotator{
-  display:none;
-  margin-bottom:28px;
-}
-
-.docked-rotator.visible{
-  display:block;
-}
-
-/* MOBILE OPTIMIZATION */
+/* ================= RESPONSIVE ================= */
 
 @media(max-width:900px){
-
-  .hero{
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    gap:30px;
-    padding:40px 20px 80px;
-  }
-
-  .rotator{
-    width:100%;
-    max-width:360px;
-    height:340px;
-  }
-
-  /* Smaller docked rotator */
-  .docked-rotator{
-    max-width:260px;
-    height:250px;
-    margin:0 auto 22px;
-  }
-
-  .overlay-features{
-    grid-template-columns:1fr;
-    margin:-70px 20px 50px;
-    padding:30px 20px;
-    gap:24px;
-  }
-
-  .feature-card img{
-    height:90px;
-  }
-
-  .feature-card button{
-    padding:10px 22px;
-    font-size:13px;
-  }
-
-  .content{
-    grid-template-columns:1fr;
-    gap:40px;
-  }
-
-  iframe{
-    height:900px;
-  }
-
-  .event-info{
-    font-size:22px;
-  }
-
+  .hero{flex-direction:column;align-items:center;gap:24px}
+  .rotator{width:100%;max-width:360px;height:380px;transform:none}
+  .nav-overlay{margin:-80px auto 50px;padding:26px}
+  .nav-grid{grid-template-columns:1fr}
+  .nav-logo-slot{height:100px}
+  .main{grid-template-columns:1fr;gap:34px}
 }
 </style>
 </head>
+
 <body>
 
 <div class="header"></div>
 <div class="stripes"></div>
 
-<div class="hero-wrapper">
-<section class="hero" id="hero">
+<div class="wrap">
 
-  <div class="hero-text">
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-accent">
+      <div class="r"></div>
+      <div class="g"></div>
+    </div>
+
     <div class="hero-title">
-      <img src="./website-ari-title.png">
+      <img src="./website-ari-title.png" alt="">
     </div>
 
     <div class="event-info">
-      Saturday, May 9, 2026 • 5:30 PM – 11:00 PM<br>
+      Saturday, May 9, 2026 • 5:30–11:00 PM<br>
       Congregation Kol Ami<br>
       1101 Springdale Road • Cherry Hill, NJ 08003
+    </div>
+
+    <div class="questions-link">
+      <a href="mailto:satwikandrebecca@gmail.com">Questions? Email Us →</a>
     </div>
   </div>
 
@@ -287,99 +328,121 @@ iframe{
     <img src="./ari-phillies.png">
     <img src="./ari-eagles.png">
   </div>
-
 </section>
-</div>
 
-<div class="overlay-features">
-  <div class="feature-card">
-    <img src="./logo-ari-phillies.png">
-    <button onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</button>
-  </div>
-  <div class="feature-card">
-    <img src="./logo-ari-sixers.png">
-    <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
-  </div>
-  <div class="feature-card">
-    <img src="./logo-eagles.png">
-    <button onclick="document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah Project</button>
-  </div>
-</div>
-
-<section class="content">
-
-  <div id="rsvp">
-    <div class="section-title">RSVP</div>
-    <iframe src="https://ariseshasaibarmitzvah.rsvpify.com"></iframe>
-  </div>
-
-  <div>
-
-    <div class="rotator docked-rotator" id="dockedRotator">
-      <img src="./ari-sixers.png" class="active">
-      <img src="./ari-phillies.png">
-      <img src="./ari-eagles.png">
+<section class="nav-overlay">
+  <div class="nav-grid">
+    <div class="nav-item">
+      <div class="nav-logo-slot">
+        <img src="./logo-ari-phillies.png">
+      </div>
+      <button class="btn" onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</button>
     </div>
 
-    <div id="faq" class="section-title">Frequently Asked Questions</div>
+    <div class="nav-item">
+      <div class="nav-logo-slot">
+        <img src="./logo-ari-sixers.png">
+      </div>
+      <button class="btn" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
+    </div>
+
+    <div class="nav-item">
+      <div class="nav-logo-slot">
+        <img src="./logo-eagles.png">
+      </div>
+      <button class="btn" onclick="document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah Project</button>
+    </div>
+  </div>
+</section>
+
+<section class="main">
+  <div id="rsvp">
+    <h2 class="panel-title">RSVP</h2>
+    <div class="card">
+      <iframe id="rsvpFrame" src="https://ariseshasaibarmitzvah.rsvpify.com"></iframe>
+      <div class="rsvp-fallback">
+        Having trouble loading the form?
+        <a href="https://ariseshasaibarmitzvah.rsvpify.com" target="_blank">Open RSVP in a new tab →</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="rightColumn">
+    <h2 class="panel-title" id="faq">Frequently Asked Questions</h2>
 
     <div class="faq">
       <details>
         <summary>What should I wear?</summary>
-        <div class="answer">Dressy festive attire recommended. Comfortable shoes encouraged for dancing.</div>
+        <div class="answer">
+          Dressy / festive attire is perfect. Think dressy synagogue for the service,
+          then comfortable enough for dancing and celebrating.
+        </div>
       </details>
+
       <details>
-        <summary>What’s the schedule?</summary>
-        <div class="answer">Arrive 5:30 PM sharp for service, followed by cocktails & games, then dinner, speeches, and dancing.</div>
+        <summary>What is the schedule?</summary>
+        <div class="answer">
+          Please arrive 5:30 PM sharp for the service, followed by cocktail hour and games,
+          then dinner, speeches, and dancing.
+        </div>
+      </details>
+
+      <details>
+        <summary>Where do I book a hotel?</summary>
+        <div class="answer">
+          We recommend Cherry Hill / Mount Laurel / nearby Philly suburbs.
+        </div>
+      </details>
+
+      <details>
+        <summary>How does pickup work?</summary>
+        <div class="answer">
+          Pickup is easiest at the main entrance of Congregation Kol Ami.
+        </div>
       </details>
     </div>
 
-    <div id="mitzvah" class="mitzvah">
-      <div class="section-title" style="color:var(--green);">Mitzvah Project</div>
+    <div class="card" id="mitzvah" style="margin-top:18px;padding:18px;">
+      <h2 class="panel-title">Mitzvah Project</h2>
       <p>
-        Ari is supporting <strong>Arden for All</strong>, bringing theatre education to students without access to arts programming.
+        Ari is fundraising and volunteering with <strong>Arden for All</strong>,
+        sharing his love of acting developed through <strong>Haddonfield Theater Arts Company (HTAC)</strong>.
       </p>
       <p>
-        Having performed with <strong>Haddonfield Theater Arts Company (HTAC)</strong>, Ari loves acting and wanted to share that joy.
-      </p>
-      <p>
-        He raised over <strong>$1,000</strong> distributing Candygrams and volunteers in the classes with students in the city.
+        He distributed Candygrams for Valentine’s Day and raised over $1,000,
+        and he volunteers in city theatre classes to help students experience
+        performance and storytelling.
       </p>
     </div>
 
   </div>
-
 </section>
 
+</div>
+
 <script>
-const heroSlides = document.querySelectorAll('#heroRotator img');
-const dockedSlides = document.querySelectorAll('#dockedRotator img');
-let current = 0;
+const slides=document.querySelectorAll('#heroRotator img');
+let i=0;
+setInterval(()=>{
+  slides[i].classList.remove('active');
+  i=(i+1)%slides.length;
+  slides[i].classList.add('active');
+},2500);
 
-function rotateSlides(){
-  heroSlides[current].classList.remove('active');
-  dockedSlides[current].classList.remove('active');
-  current = (current + 1) % heroSlides.length;
-  heroSlides[current].classList.add('active');
-  dockedSlides[current].classList.add('active');
+/* RSVP height match */
+const frame=document.getElementById('rsvpFrame');
+const right=document.getElementById('rightColumn');
+
+function syncHeight(){
+  if(window.innerWidth>900){
+    frame.style.height=right.offsetHeight+'px';
+  }else{
+    frame.style.height='900px';
+  }
 }
-
-setInterval(rotateSlides, 3200);
-
-const heroSection = document.getElementById('hero');
-const docked = document.getElementById('dockedRotator');
-
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(!entry.isIntersecting){
-      docked.classList.add('visible');
-    } else {
-      docked.classList.remove('visible');
-    }
-  });
-},{threshold:0.2});
-
-observer.observe(heroSection);
+new ResizeObserver(syncHeight).observe(right);
+window.addEventListener('resize',syncHeight);
+window.addEventListener('load',syncHeight);
 </script>
 
 </body>
