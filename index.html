@@ -5,444 +5,614 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ari's Bar Mitzvah</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --red:#E81828;
   --blue:#0E2A66;
   --green:#004C54;
-  --bg:#f6f4ef;
-  --ink:#111;
-  --glass:rgba(255,255,255,.6);
-  --glass-border:rgba(0,0,0,.08);
 }
 
-/* ================= BASE ================= */
+*{box-sizing:border-box;}
 
-*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:'Cormorant Garamond',serif;
-  background:var(--bg);
-  color:var(--ink);
-  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(232,24,40,.05), transparent 60%),
+    radial-gradient(circle at 80% 60%, rgba(0,76,84,.05), transparent 60%),
+    linear-gradient(#f7f6f2, #f1f1ef);
+  color:#111;
 }
 
-/* subtle fixed texture */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.08;
-  background-image:
-    radial-gradient(rgba(0,0,0,.35) 1px, transparent 1px);
-  background-size:28px 28px;
+/* HEADER */
+.header-wrap{
+  position:relative;
+  z-index:10;
 }
-
-.wrap{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 20px;
-}
-
-/* ================= HEADER ================= */
-
-.header{
-  height:46px;
-  background:#0c2555;
-}
-
+.header{background:var(--blue);height:55px;}
 .stripes{
-  height:34px;
+  height:36px;
   background:
     linear-gradient(to bottom,
-      var(--red) 0 11px,
-      white 11px 14px,
-      var(--green) 14px 25px,
-      white 25px 28px,
-      var(--red) 28px 34px
+      var(--red) 0px,var(--red) 10px,
+      white 10px,white 14px,
+      var(--green) 14px,var(--green) 24px,
+      white 24px,white 28px,
+      var(--red) 28px,var(--red) 36px
     );
 }
+.header-logo{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  height:calc(100% + 10px);
+  z-index:11;
+  pointer-events:none;
+}
+.header-logo img{
+  height:100%;
+  width:auto;
+  display:block;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.25));
+}
 
-/* ================= HERO ================= */
+/* HERO */
+.hero-wrapper{display:flex;justify-content:center;}
 
 .hero{
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  align-items:flex-end;
   gap:60px;
-  padding:44px 0 70px;
-  position:relative;
-  z-index:2;
+  padding:60px 20px 110px;
+  max-width:1200px;
+  width:100%;
 }
 
-.hero-left{
-  flex:1;
-  text-align:center;
+.hero-text{flex:1;text-align:center;}
+.hero-title img{max-width:480px;width:100%;margin-bottom:28px;}
+
+/* Decorative tapered swoosh dividers around event info */
+.event-divider{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  margin:20px auto;
+  width:100%;
+  max-width:360px;
 }
 
-.hero-accent{
-  width:150px;
-  margin:0 auto 16px;
-  display:grid;
-  gap:7px;
-}
-.hero-accent div{
-  height:4px;
-  border-radius:999px;
-}
-.hero-accent .r{
-  background:linear-gradient(90deg,transparent,var(--red),transparent);
-}
-.hero-accent .g{
-  width:70%;
-  justify-self:center;
-  background:linear-gradient(90deg,transparent,var(--green),transparent);
-}
-
-.hero-title img{
-  width:min(520px,100%);
+.event-divider svg{
   display:block;
-  margin:0 auto 12px;
+  overflow:visible;
 }
 
 .event-info{
-  font-size:clamp(20px,2.5vw,28px);
+  font-family:'Cormorant Garamond', serif;
+  font-size:28px;
+  color:var(--blue);
   line-height:1.6;
 }
 
-.questions-link{
-  margin-top:12px;
-  font-family:'Montserrat',sans-serif;
-  font-weight:800;
-  font-size:14px;
+/* RSVP external link */
+.rsvp-external{
+  display:block;
+  text-align:center;
+  margin-bottom:10px;
+  font-family:'Cormorant Garamond', serif;
+  font-size:17px;
+  letter-spacing:.3px;
+  color:#111;
 }
-.questions-link a{
-  text-decoration:none;
+
+.rsvp-external a{
   color:var(--blue);
-  position:relative;
+  text-decoration:none;
+  border-bottom:1px solid rgba(14,42,102,.35);
+  transition: color .2s, border-color .2s;
 }
-.questions-link a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-2px;
-  width:100%;
-  height:2px;
-  background:linear-gradient(90deg,var(--red),var(--green));
-  transform:scaleX(0);
-  transform-origin:left;
-  transition:.3s;
+
+.rsvp-external a:hover{
+  color:var(--blue);
+  border-bottom-color:var(--blue);
 }
-.questions-link a:hover::after{transform:scaleX(1)}
 
-/* ================= ROTATOR ================= */
-
+/* ROTATOR */
 .rotator{
-  width:480px;
-  height:520px;
   position:relative;
-  overflow:visible;
-  transform:translateY(-8px);
+  width:480px;
+  height:460px;
 }
 
 .rotator img{
   position:absolute;
-  bottom:0;
+  top:0;
   left:50%;
-  transform:translateX(-50%) scale(1);
-  height:112%;
+  max-height:460px;
+  width:auto;
   opacity:0;
-  transition:opacity .5s ease;
+  transform: translateX(-50%) scale(1);
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,.25));
+  transition: opacity .8s ease-in-out, transform 2.5s ease-in-out;
 }
 
 .rotator img.active{
   opacity:1;
-  animation:kenburns 2.6s ease forwards;
+  transform: translateX(-50%) scale(1.08);
 }
 
-@keyframes kenburns{
-  0%{transform:translateX(-50%) scale(1)}
-  100%{transform:translateX(calc(-50% + 8px)) scale(1.1)}
-}
-
-/* ================= NAV OVERLAY ================= */
-
-.nav-overlay{
-  margin:-150px auto 70px;
-  padding:40px;
-  border-radius:20px;
-  background:var(--glass);
-  border:1px solid var(--glass-border);
-  backdrop-filter:blur(12px);
-  position:relative;
-  z-index:5;
-}
-
-.nav-grid{
+/* OVERLAY NAV PANEL */
+.overlay-features{
+  max-width:1100px;
+  margin:-150px auto 80px;
+  padding:50px 40px;
+  background: linear-gradient(135deg, rgba(255,255,255,.60), rgba(245,244,240,.60));
+  backdrop-filter: blur(10px);
+  border-radius:22px;
+  box-shadow:0 25px 55px rgba(0,0,0,.10);
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:30px;
+  gap:40px;
+  text-align:center;
 }
 
-.nav-item{
+.feature-card{
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:14px;
 }
 
-.nav-logo-slot{
-  height:180px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.nav-logo-slot img{
-  max-height:100%;
-  max-width:100%;
+.feature-card img{
+  height:clamp(130px,12vw,190px);
+  width:auto;
 }
 
-.btn{
-  padding:12px 34px;
-  border-radius:14px;
-  border:0;
-  background:var(--blue);
-  color:#fff;
+.feature-card button{
   font-family:'Montserrat',sans-serif;
-  font-weight:900;
-  letter-spacing:1.5px;
+  font-weight:700;
+  padding:14px 36px;
+  background:var(--blue);
+  color:white;
+  border:none;
+  border-radius:10px;
   cursor:pointer;
+  font-size:15px;
 }
 
-/* ================= MAIN ================= */
-
-.main{
+/* CONTENT GRID */
+.content{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:56px;
-  padding-bottom:90px;
+  gap:60px;
+  max-width:1200px;
+  margin:80px auto;
+  padding:0 20px;
+  align-items:start;
 }
 
-.panel-title{
-  font-size:34px;
-  margin-bottom:16px;
-}
-
-.card{
-  padding:18px;
-  border-radius:16px;
-  background:var(--glass);
-  border:1px solid var(--glass-border);
-  backdrop-filter:blur(12px);
+.section-title{
+  font-family:'Cormorant Garamond', serif;
+  font-size:32px;
+  color:var(--blue);
+  margin:0 0 18px;
 }
 
 iframe{
   width:100%;
-  border:0;
+  height:920px;
+  border:none;
   border-radius:12px;
+  box-shadow:0 18px 50px rgba(0,0,0,.14);
+  transition: height .3s ease;
 }
 
-.rsvp-fallback{
-  margin-top:14px;
-  text-align:center;
-  font-family:'Montserrat',sans-serif;
-  font-size:14px;
+/* DOCKED ROTATOR (clean version in normal flow) */
+.docked-rotator{
+  display:none;
+  margin-bottom:0;
+  width:100%;
+  max-width:420px;
+  height:380px;
 }
 
-.rsvp-fallback a{
-  font-weight:900;
-  text-decoration:none;
-  color:var(--blue);
+/* FAQ OVERLAY BOX — overlaps bottom of docked rotator like the hero overlay */
+.faq-overlay-box{
+  position:relative;
+  margin-top:-35px;
+  padding:30px 28px 28px;
+  background: linear-gradient(135deg, rgba(255,255,255,.60), rgba(245,244,240,.60));
+  backdrop-filter: blur(10px);
+  border-radius:22px;
+  box-shadow:0 25px 55px rgba(0,0,0,.10);
+  z-index:2;
 }
 
-/* ================= FAQ ================= */
+/* When docked rotator is hidden, remove the negative margin */
+.faq-overlay-box.no-overlap{
+  margin-top:0;
+  background:none;
+  backdrop-filter:none;
+  border-radius:0;
+  box-shadow:none;
+  padding:0;
+}
+
+/* FAQ (elevated but still simple/clean) */
+.faq{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
 
 .faq details{
-  margin-bottom:12px;
-  border-radius:12px;
+  border-radius:14px;
   overflow:hidden;
   border:1px solid rgba(0,0,0,.08);
-  background:rgba(255,255,255,.85);
+  background: rgba(255,255,255,.90);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
+
+.faq details:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(0,0,0,.10);
+}
+
 .faq summary{
-  padding:14px;
-  font-family:'Montserrat',sans-serif;
-  font-weight:900;
+  list-style:none;
   cursor:pointer;
+  padding:16px 18px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  background:rgba(240,240,240,.82);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
 }
-.answer{
-  padding:14px 16px 18px;
+
+.faq summary::-webkit-details-marker{display:none;}
+
+.faq summary .chev{
+  width:30px;height:30px;border-radius:999px;
+  display:grid;place-items:center;
+  background: rgba(14,42,102,.10);
+  color: var(--blue);
+  transition: transform .2s ease, background .2s ease;
+  flex:0 0 auto;
+}
+
+.faq details[open] summary .chev{
+  transform: rotate(180deg);
+  background: rgba(0,76,84,.12);
+  color: var(--green);
+}
+
+.faq .answer{
+  padding:14px 18px 18px;
+  font-family:'Cormorant Garamond',serif;
   font-size:19px;
-  line-height:1.7;
+  line-height:1.75;
+  background: rgba(255,255,255,.96);
+  border-top: 1px solid rgba(0,0,0,.06);
 }
 
-/* ================= RESPONSIVE ================= */
+/* MITZVAH */
+.mitzvah{
+  margin-top:18px;
+  padding:18px 18px 20px;
+  border-radius:16px;
+  background:rgba(255,255,255,.92);
+  border-left:6px solid var(--green);
+  box-shadow: 0 14px 40px rgba(0,0,0,.10);
+}
 
+.mitzvah p{
+  margin: 10px 0 0;
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;
+  line-height:1.75;
+  color: rgba(17,17,17,.92);
+}
+
+.small-note{
+  margin-top:12px;
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;
+  letter-spacing:.2px;
+  color: rgba(17,17,17,.65);
+}
+
+/* MOBILE */
 @media(max-width:900px){
-  .hero{flex-direction:column;align-items:center;gap:24px}
-  .rotator{width:100%;max-width:360px;height:380px;transform:none}
-  .nav-overlay{margin:-80px auto 50px;padding:26px}
-  .nav-grid{grid-template-columns:1fr}
-  .nav-logo-slot{height:100px}
-  .main{grid-template-columns:1fr;gap:34px}
+  .hero{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:30px;
+    padding:40px 20px 80px;
+  }
+
+  .rotator{
+    width:100%;
+    max-width:360px;
+    height:340px;
+    margin:0 auto;
+  }
+
+  .overlay-features{
+    grid-template-columns:1fr;
+    margin:-70px 20px 50px;
+    padding:30px 20px;
+    gap:24px;
+  }
+
+  .feature-card img{height:90px;}
+  .feature-card button{padding:10px 22px;font-size:13px;}
+
+  .content{grid-template-columns:1fr;gap:40px;}
+  iframe{height:900px;}
+  .event-info{font-size:22px;}
+  .event-divider{max-width:260px;}
+
+  /* no docking on mobile */
+  .docked-rotator{display:none !important;}
+
+  /* no overlay styling on mobile */
+  .faq-overlay-box{
+    margin-top:0;
+    background:none;
+    backdrop-filter:none;
+    border-radius:0;
+    box-shadow:none;
+    padding:0;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="header"></div>
-<div class="stripes"></div>
+<div class="header-wrap">
+  <div class="header"></div>
+  <div class="stripes"></div>
+  <div class="header-logo">
+    <img src="./logo-AS-white.png" alt="AS Logo">
+  </div>
+</div>
 
-<div class="wrap">
+<div class="hero-wrapper">
+<section class="hero" id="hero">
 
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-accent">
-      <div class="r"></div>
-      <div class="g"></div>
+  <div class="hero-text">
+    <div class="hero-title">
+      <img src="./website-ari-title.png" alt="Ari's Bar Mitzvah">
     </div>
 
-    <div class="hero-title">
-      <img src="./website-ari-title.png" alt="">
+    <div class="event-divider">
+      <svg width="320" height="5" viewBox="0 0 320 5"><ellipse cx="160" cy="2.5" rx="160" ry="2.5" fill="#E81828"/></svg>
+      <svg width="220" height="3.5" viewBox="0 0 220 3.5"><ellipse cx="110" cy="1.75" rx="110" ry="1.75" fill="#004C54"/></svg>
     </div>
 
     <div class="event-info">
-      Saturday, May 9, 2026 • 5:30–11:00 PM<br>
+      Saturday, May 9, 2026 • 5:30 PM – 11:00 PM<br>
       Congregation Kol Ami<br>
       1101 Springdale Road • Cherry Hill, NJ 08003
     </div>
 
-    <div class="questions-link">
-      <a href="mailto:satwikandrebecca@gmail.com">Questions? Email Us →</a>
+    <div class="event-divider">
+      <svg width="220" height="3.5" viewBox="0 0 220 3.5"><ellipse cx="110" cy="1.75" rx="110" ry="1.75" fill="#004C54"/></svg>
+      <svg width="320" height="5" viewBox="0 0 320 5"><ellipse cx="160" cy="2.5" rx="160" ry="2.5" fill="#E81828"/></svg>
     </div>
   </div>
 
-  <div class="rotator" id="heroRotator">
-    <img src="./ari-sixers.png" class="active">
-    <img src="./ari-phillies.png">
-    <img src="./ari-eagles.png">
+  <div class="rotator" id="heroRotator" aria-label="Ari photo rotator">
+    <img src="./ari-sixers.png" alt="Ari - Sixers">
+    <img src="./ari-phillies.png" alt="Ari - Phillies">
+    <img src="./ari-eagles.png" alt="Ari - Eagles">
   </div>
+
 </section>
-
-<section class="nav-overlay">
-  <div class="nav-grid">
-    <div class="nav-item">
-      <div class="nav-logo-slot">
-        <img src="./logo-ari-phillies.png">
-      </div>
-      <button class="btn" onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</button>
-    </div>
-
-    <div class="nav-item">
-      <div class="nav-logo-slot">
-        <img src="./logo-ari-sixers.png">
-      </div>
-      <button class="btn" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
-    </div>
-
-    <div class="nav-item">
-      <div class="nav-logo-slot">
-        <img src="./logo-eagles.png">
-      </div>
-      <button class="btn" onclick="document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah Project</button>
-    </div>
-  </div>
-</section>
-
-<section class="main">
-  <div id="rsvp">
-    <h2 class="panel-title">RSVP</h2>
-    <div class="card">
-      <iframe id="rsvpFrame" src="https://ariseshasaibarmitzvah.rsvpify.com"></iframe>
-      <div class="rsvp-fallback">
-        Having trouble loading the form?
-        <a href="https://ariseshasaibarmitzvah.rsvpify.com" target="_blank">Open RSVP in a new tab →</a>
-      </div>
-    </div>
-  </div>
-
-  <div id="rightColumn">
-    <h2 class="panel-title" id="faq">Frequently Asked Questions</h2>
-
-    <div class="faq">
-      <details>
-        <summary>What should I wear?</summary>
-        <div class="answer">
-          Dressy / festive attire is perfect. Think dressy synagogue for the service,
-          then comfortable enough for dancing and celebrating.
-        </div>
-      </details>
-
-      <details>
-        <summary>What is the schedule?</summary>
-        <div class="answer">
-          Please arrive 5:30 PM sharp for the service, followed by cocktail hour and games,
-          then dinner, speeches, and dancing.
-        </div>
-      </details>
-
-      <details>
-        <summary>Where do I book a hotel?</summary>
-        <div class="answer">
-          We recommend Cherry Hill / Mount Laurel / nearby Philly suburbs.
-        </div>
-      </details>
-
-      <details>
-        <summary>How does pickup work?</summary>
-        <div class="answer">
-          Pickup is easiest at the main entrance of Congregation Kol Ami.
-        </div>
-      </details>
-    </div>
-
-    <div class="card" id="mitzvah" style="margin-top:18px;padding:18px;">
-      <h2 class="panel-title">Mitzvah Project</h2>
-      <p>
-        Ari is fundraising and volunteering with <strong>Arden for All</strong>,
-        sharing his love of acting developed through <strong>Haddonfield Theater Arts Company (HTAC)</strong>.
-      </p>
-      <p>
-        He distributed Candygrams for Valentine’s Day and raised over $1,000,
-        and he volunteers in city theatre classes to help students experience
-        performance and storytelling.
-      </p>
-    </div>
-
-  </div>
-</section>
-
 </div>
 
+<div class="overlay-features">
+  <div class="feature-card">
+    <img src="./logo-ari-phillies.png" alt="RSVP">
+    <button onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</button>
+  </div>
+  <div class="feature-card">
+    <img src="./logo-ari-sixers.png" alt="FAQ">
+    <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
+  </div>
+  <div class="feature-card">
+    <img src="./logo-eagles.png" alt="Mitzvah Project">
+    <button onclick="document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah Project</button>
+  </div>
+</div>
+
+<section class="content">
+
+  <!-- LEFT -->
+  <div id="rsvp">
+    <div class="section-title">RSVP</div>
+    <div class="rsvp-external">Having trouble? <a href="https://ariseshasaibarmitzvah.rsvpify.com" target="_blank" rel="noopener">Open RSVP in a new tab ↗</a></div>
+    <iframe src="https://ariseshasaibarmitzvah.rsvpify.com" title="RSVPify"></iframe>
+  </div>
+
+  <!-- RIGHT -->
+  <div>
+
+    <!-- Docked rotator (desktop only; appears when hero leaves viewport) -->
+    <div class="rotator docked-rotator" id="dockedRotator" aria-label="Ari photo rotator (docked)">
+      <img src="./ari-sixers.png" alt="">
+      <img src="./ari-phillies.png" alt="">
+      <img src="./ari-eagles.png" alt="">
+    </div>
+
+    <!-- FAQ overlay box — overlaps bottom of docked rotator like the hero overlay -->
+    <div class="faq-overlay-box no-overlap" id="faqOverlayBox">
+
+      <div id="faq" class="section-title">Frequently Asked Questions</div>
+
+      <div class="faq">
+        <details>
+          <summary>
+            What should I wear?
+            <span class="chev">⌄</span>
+          </summary>
+          <div class="answer">
+            This is a dressy, fun event with so much to celebrate!  "Cocktail attire" is appropriate - suits, blazers, dresses, pantsuits, whatever you would wear to a party! Be ready to dance. At the service, shoulders should be covered with a shirt, sweater or shawl. There will be a basket of yarmulkes outside the sanctuary - traditionally men often choose to wear them; anyone is welcome to wear one but it's certainly not required.
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            What's the overall schedule?
+            <span class="chev">⌄</span>
+          </summary>
+          <div class="answer">
+            Please arrive promptly at 5:30pm so everyone can be settled and ready for the service to begin. If you need to arrive late, we understand.  You can come in quietly and sit in the back and that is not a problem. The service will be followed by a cocktail hour and games for the kids, then dinner and dancing the night away!
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            When do I pick up my child?
+            <span class="chev">⌄</span>
+          </summary>
+          <div class="answer">
+            The party will end at 11pm. We understand this is late, but hope you can party until the end! Please have your child let us know if you are picking up early so we don't worry!
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            Where do I book a hotel?
+            <span class="chev">⌄</span>
+          </summary>
+          <div class="answer">
+            For your convenience, we have a hotel block reserved nearby at XXX (click here to reserve). Of course, please feel free to stay anywhere else you'd like. We appreciate you traveling in!
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            Phones?
+            <span class="chev">⌄</span>
+          </summary>
+          <div class="answer">
+            Please silence all phones and watches and refrain from using devices during the service. Please don't take photos during the service, but they're definitely encouraged during the party and we'd love to see your best shots!
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            Other questions?
+            <span class="chev">⌄</span>
+          </summary>
+          <div class="answer">
+            If there are any other questions we have neglected to cover, please text or email us!
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+    <div id="mitzvah" class="mitzvah">
+      <div class="section-title" style="color:var(--green); margin-bottom:8px;">Mitzvah Project</div>
+
+      <p>
+        Ari is fundraising and volunteering with <strong>Arden for All</strong>, an arts-education program that helps bring theatre experiences
+        and teaching-artist instruction to students who might not otherwise have access.
+      </p>
+
+      <p>
+        Ari has performed with <strong>Haddonfield Theater Arts Company (HTAC)</strong> for years and loves acting — so for his mitzvah project,
+        he wanted to share that joy and confidence-building experience with kids who have fewer opportunities.
+      </p>
+
+      <p>
+        He fundraised by distributing <strong>Candygrams</strong> around town for Valentine's Day and raised <strong>over $1,000</strong>.
+        He's also volunteering in the classes with students in the city, helping them engage with performance and storytelling.
+      </p>
+
+      <div class="small-note">
+        Thank you for supporting Ari's project and the power of arts education.
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
 <script>
-const slides=document.querySelectorAll('#heroRotator img');
-let i=0;
-setInterval(()=>{
-  slides[i].classList.remove('active');
-  i=(i+1)%slides.length;
-  slides[i].classList.add('active');
-},2500);
+/* Rotation shared between hero and docked */
+const heroSlides = document.querySelectorAll('#heroRotator img');
+const dockedSlides = document.querySelectorAll('#dockedRotator img');
+let current = 0;
+const ROTATE_MS = 3200;
 
-/* RSVP height match */
-const frame=document.getElementById('rsvpFrame');
-const right=document.getElementById('rightColumn');
+function rotateSlides(){
+  heroSlides[current].classList.remove('active');
+  dockedSlides[current].classList.remove('active');
 
-function syncHeight(){
-  if(window.innerWidth>900){
-    frame.style.height=right.offsetHeight+'px';
-  }else{
-    frame.style.height='900px';
-  }
+  current = (current + 1) % heroSlides.length;
+
+  heroSlides[current].classList.add('active');
+  dockedSlides[current].classList.add('active');
 }
-new ResizeObserver(syncHeight).observe(right);
-window.addEventListener('resize',syncHeight);
-window.addEventListener('load',syncHeight);
+/* Activate first slide after initial render so the transition animates on load */
+requestAnimationFrame(()=>{
+  requestAnimationFrame(()=>{
+    heroSlides[0].classList.add('active');
+    dockedSlides[0].classList.add('active');
+  });
+});
+
+setInterval(rotateSlides, ROTATE_MS);
+
+/* Clean docking: desktop only, toggles display so it pushes FAQ down */
+const isMobile = window.matchMedia('(max-width: 900px)').matches;
+
+if (!isMobile) {
+  const heroSection = document.getElementById('hero');
+  const docked = document.getElementById('dockedRotator');
+  const faqBox = document.getElementById('faqOverlayBox');
+  const rsvpCol = document.getElementById('rsvp');
+  const rightCol = rsvpCol.nextElementSibling;
+  const rsvpIframe = rsvpCol.querySelector('iframe');
+
+  /* Sync RSVP iframe height to match right column */
+  function syncHeight(){
+    const rightH = rightCol.offsetHeight;
+    /* Account for all elements above the iframe in the RSVP column */
+    const iframeTop = rsvpIframe.offsetTop - rsvpCol.offsetTop;
+    rsvpIframe.style.height = (rightH - iframeTop) + 'px';
+  }
+
+  /* Observe right column for size changes (FAQ open/close, docked rotator toggle) */
+  const resizeObs = new ResizeObserver(syncHeight);
+  resizeObs.observe(rightCol);
+
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting){
+        docked.style.display = 'block';
+        faqBox.classList.remove('no-overlap');
+      } else {
+        docked.style.display = 'none';
+        faqBox.classList.add('no-overlap');
+      }
+      /* Re-sync after layout shift */
+      requestAnimationFrame(syncHeight);
+    });
+  },{threshold:0.2});
+
+  observer.observe(heroSection);
+}
 </script>
 
 </body>
