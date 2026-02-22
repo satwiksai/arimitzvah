@@ -1,314 +1,385 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Ari’s Bar Mitzvah — May 9, 2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ari's Bar Mitzvah</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Great+Vibes&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --navy:#0b1b3b;
-  --gold:#c9a24a;
-  --red:#c81f2a;
+  --red:#E81828;
+  --blue:#0E2A66;
+  --green:#004C54;
 }
 
-*{box-sizing:border-box}
+*{box-sizing:border-box;}
+
 body{
   margin:0;
-  color:#fff;
-  font-family:Inter,system-ui;
   background:
-    radial-gradient(900px 600px at 10% 10%, rgba(201,162,74,.25), transparent 60%),
-    radial-gradient(900px 600px at 90% 90%, rgba(200,31,42,.15), transparent 60%),
-    linear-gradient(180deg,#050a16 0%,var(--navy) 60%,#050a16 100%);
+    radial-gradient(circle at 20% 30%, rgba(232,24,40,.05), transparent 60%),
+    radial-gradient(circle at 80% 60%, rgba(0,76,84,.05), transparent 60%),
+    linear-gradient(#f7f6f2, #f1f1ef);
+  color:#111;
 }
 
-.wrap{max-width:1100px;margin:auto;padding:0 20px}
+/* HEADER */
 
-/* NAV */
-.topbar{
-  position:sticky;top:0;
-  backdrop-filter:blur(12px);
-  background:rgba(5,10,22,.6);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-.top-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 0;
-}
-nav a{
-  color:#fff;
-  text-decoration:none;
-  font-size:13px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  margin-left:18px;
-  opacity:.8;
-}
-nav a:hover{opacity:1}
-.nav-cta{
-  border:1px solid rgba(201,162,74,.6);
-  padding:8px 14px;
-  border-radius:12px;
+.header{background:var(--blue);height:55px;}
+.stripes{
+  height:36px;
+  background:
+    linear-gradient(to bottom,
+      var(--red) 0px,var(--red) 10px,
+      white 10px,white 14px,
+      var(--green) 14px,var(--green) 24px,
+      white 24px,white 28px,
+      var(--red) 28px,var(--red) 36px
+    );
 }
 
 /* HERO */
+
+.hero-wrapper{display:flex;justify-content:center;}
+
 .hero{
-  padding:60px 0 40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:60px;
+  padding:60px 20px 110px;
+  max-width:1200px;
+  width:100%;
 }
-.hero-card{
+
+.hero-text{flex:1;text-align:center;}
+
+.hero-title img{max-width:480px;width:100%;margin-bottom:28px;}
+
+.event-info{
+  font-family:'Cormorant Garamond', serif;
+  font-size:28px;
+  color:var(--blue);
+  line-height:1.6;
+}
+
+/* ROTATOR */
+
+.rotator{
   position:relative;
-  border-radius:26px;
-  overflow:hidden;
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
-  border:1px solid rgba(255,255,255,.1);
-  min-height:580px;
+  width:480px;
+  height:460px;
 }
-.collage{
+
+.rotator img{
   position:absolute;
-  inset:0;
+  max-height:460px;
+  width:auto;
+  opacity:0;
+  transform:scale(1);
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,.25));
+  transition: opacity .8s ease-in-out, transform 2.5s ease-in-out;
+}
+
+.rotator img.active{
+  opacity:1;
+  transform:scale(1.08);
+}
+
+/* OVERLAY NAV PANEL */
+
+.overlay-features{
+  max-width:1100px;
+  margin:-150px auto 80px;
+  padding:50px 40px;
+  background:rgba(255,255,255,.65);
+  backdrop-filter:blur(10px);
+  border-radius:22px;
+  box-shadow:0 25px 55px rgba(0,0,0,.10);
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+  text-align:center;
+}
+
+.feature-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+.feature-card img{
+  height:clamp(130px,12vw,190px);
+}
+
+.feature-card button{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  padding:14px 36px;
+  background:var(--blue);
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:15px;
+}
+
+/* CONTENT GRID */
+
+.content{
   display:grid;
   grid-template-columns:1fr 1fr;
-  grid-template-rows:1.2fr .8fr;
-  gap:10px;
-  padding:14px;
-  opacity:.75;
-}
-.tile{
-  border-radius:18px;
-  overflow:hidden;
-  position:relative;
-}
-.tile img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transform:scale(1.05);
-}
-.tile:after{
-  content:"";
-  position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(5,10,22,.2),rgba(5,10,22,.8));
+  gap:60px;
+  max-width:1200px;
+  margin:80px auto;
+  padding:0 20px;
 }
 
-/* TEXT */
-.hero-content{
-  position:relative;
-  padding:40px;
-  z-index:5;
-}
-.script{
-  font-family:"Great Vibes",cursive;
-  font-size:72px;
-  color:var(--gold);
-}
-.title{
-  font-family:"Cormorant Garamond",serif;
-  font-weight:700;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  font-size:46px;
-  margin:0;
-}
-.details{
-  font-family:"Cormorant Garamond",serif;
-  font-size:22px;
-  margin-top:10px;
-}
-.sub{
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  font-size:13px;
-  margin-top:6px;
-  opacity:.85;
-}
-.btn{
-  display:inline-block;
-  margin-top:20px;
-  padding:12px 22px;
-  border-radius:14px;
-  font-size:13px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  border:1px solid rgba(201,162,74,.7);
-  background:linear-gradient(180deg,rgba(201,162,74,.3),rgba(201,162,74,.1));
-  cursor:pointer;
-  color:#fff;
-}
-
-/* SECTIONS */
-section{
-  padding:60px 0;
-}
 .section-title{
-  font-family:"Cormorant Garamond",serif;
-  font-size:26px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  margin-bottom:20px;
+  font-family:'Cormorant Garamond', serif;
+  font-size:32px;
+  color:var(--blue);
+  margin-bottom:18px;
 }
-.panel{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:22px;
-  padding:22px;
-}
-details{margin-bottom:12px}
-summary{cursor:pointer;font-weight:600}
-.answer{margin-top:8px;font-size:14px;opacity:.9}
 
-/* MODAL */
-dialog{
+iframe{
+  width:100%;
+  height:920px;
   border:none;
-  border-radius:24px;
+  border-radius:12px;
+  box-shadow:0 18px 50px rgba(0,0,0,.14);
+}
+
+/* FAQ */
+
+.faq details{
+  margin-bottom:14px;
+  border-radius:12px;
   overflow:hidden;
-  max-width:900px;
-  width:calc(100% - 40px);
-  box-shadow:0 40px 100px rgba(0,0,0,.7);
+  border:1px solid rgba(0,0,0,.08);
 }
-dialog::backdrop{
-  background:rgba(0,0,0,.75);
-  backdrop-filter:blur(6px);
-}
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  padding:18px;
-  background:#f8f4ea;
-  color:#111;
-  font-family:"Cormorant Garamond",serif;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-}
-.close{
+
+.faq summary{
   cursor:pointer;
-  border:none;
-  background:none;
-  font-size:18px;
+  padding:16px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  background:rgba(240,240,240,.8);
 }
-.modal-body{
-  background:#fff;
-  padding:0;
+
+.faq .answer{
+  padding:16px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;
+  line-height:1.7;
+}
+
+/* MITZVAH */
+
+.mitzvah{
+  margin-top:30px;
+  padding:24px;
+  border-radius:14px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 16px 45px rgba(0,0,0,.12);
+  border-left:6px solid var(--green);
+}
+
+.mitzvah p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;
+  line-height:1.7;
+}
+
+/* DOCKED ROTATOR */
+
+.docked-rotator{
+  display:none;
+  margin-bottom:28px;
+}
+
+.docked-rotator.visible{
+  display:block;
+}
+
+/* MOBILE OPTIMIZATION */
+
+@media(max-width:900px){
+
+  .hero{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:30px;
+    padding:40px 20px 80px;
+  }
+
+  .rotator{
+    width:100%;
+    max-width:360px;
+    height:340px;
+  }
+
+  /* Smaller docked rotator */
+  .docked-rotator{
+    max-width:260px;
+    height:250px;
+    margin:0 auto 22px;
+  }
+
+  .overlay-features{
+    grid-template-columns:1fr;
+    margin:-70px 20px 50px;
+    padding:30px 20px;
+    gap:24px;
+  }
+
+  .feature-card img{
+    height:90px;
+  }
+
+  .feature-card button{
+    padding:10px 22px;
+    font-size:13px;
+  }
+
+  .content{
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+
+  iframe{
+    height:900px;
+  }
+
+  .event-info{
+    font-size:22px;
+  }
+
 }
 </style>
 </head>
-
 <body>
 
-<header class="topbar">
-  <div class="wrap top-inner">
-    <div style="font-family:'Cormorant Garamond',serif;letter-spacing:.08em;">
-      Ari Evan Seshasai
+<div class="header"></div>
+<div class="stripes"></div>
+
+<div class="hero-wrapper">
+<section class="hero" id="hero">
+
+  <div class="hero-text">
+    <div class="hero-title">
+      <img src="./website-ari-title.png">
     </div>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#faq">FAQ</a>
-      <a href="#project">Mitzvah Project</a>
-      <a href="#" class="nav-cta" id="navRsvp">RSVP Now</a>
-    </nav>
-  </div>
-</header>
 
-<main id="home" class="hero wrap">
-
-<div class="hero-card">
-
-<div class="collage">
-  <div class="tile" style="grid-column:1 / span 2;">
-    <img src="/assets/36C24888-19B3-45D7-B797-18D5BE0916BD.jpeg">
-  </div>
-  <div class="tile">
-    <img src="/assets/IMG_3517.jpeg">
-  </div>
-  <div class="tile">
-    <img src="/assets/MML02398%202.jpeg">
-  </div>
-</div>
-
-<div class="hero-content">
-  <div class="script">Ari’s</div>
-  <h1 class="title">Bar Mitzvah</h1>
-  <div class="details">
-    Saturday, May 9, 2026<br>
-    5:00 PM – 11:00 PM
-  </div>
-  <div class="sub">
-    Congregation Kol Ami • Cherry Hill, New Jersey
+    <div class="event-info">
+      Saturday, May 9, 2026 • 5:30 PM – 11:00 PM<br>
+      Congregation Kol Ami<br>
+      1101 Springdale Road • Cherry Hill, NJ 08003
+    </div>
   </div>
 
-  <button class="btn" id="openRsvp">RSVP Now</button>
-</div>
-
-</div>
-</main>
-
-<section id="faq" class="wrap">
-  <div class="section-title">FAQ</div>
-  <div class="panel">
-    <details open>
-      <summary>Where and when is the event?</summary>
-      <div class="answer">
-        Congregation Kol Ami in Cherry Hill, NJ. Celebration from 5:00 PM – 11:00 PM.
-      </div>
-    </details>
-    <details>
-      <summary>What is the attire?</summary>
-      <div class="answer">
-        Formal / cocktail attire appropriate for a Saturday evening celebration.
-      </div>
-    </details>
-    <details>
-      <summary>How do I RSVP?</summary>
-      <div class="answer">
-        Click RSVP Now and complete the form.
-      </div>
-    </details>
+  <div class="rotator" id="heroRotator">
+    <img src="./ari-sixers.png" class="active">
+    <img src="./ari-phillies.png">
+    <img src="./ari-eagles.png">
   </div>
+
 </section>
+</div>
 
-<section id="project" class="wrap">
-  <div class="section-title">Mitzvah Project</div>
-  <div class="panel">
-    Details about Ari’s mitzvah project coming soon.
+<div class="overlay-features">
+  <div class="feature-card">
+    <img src="./logo-ari-phillies.png">
+    <button onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</button>
   </div>
+  <div class="feature-card">
+    <img src="./logo-ari-sixers.png">
+    <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
+  </div>
+  <div class="feature-card">
+    <img src="./logo-eagles.png">
+    <button onclick="document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah Project</button>
+  </div>
+</div>
+
+<section class="content">
+
+  <div id="rsvp">
+    <div class="section-title">RSVP</div>
+    <iframe src="https://ariseshasaibarmitzvah.rsvpify.com"></iframe>
+  </div>
+
+  <div>
+
+    <div class="rotator docked-rotator" id="dockedRotator">
+      <img src="./ari-sixers.png" class="active">
+      <img src="./ari-phillies.png">
+      <img src="./ari-eagles.png">
+    </div>
+
+    <div id="faq" class="section-title">Frequently Asked Questions</div>
+
+    <div class="faq">
+      <details>
+        <summary>What should I wear?</summary>
+        <div class="answer">Dressy festive attire recommended. Comfortable shoes encouraged for dancing.</div>
+      </details>
+      <details>
+        <summary>What’s the schedule?</summary>
+        <div class="answer">Arrive 5:30 PM sharp for service, followed by cocktails & games, then dinner, speeches, and dancing.</div>
+      </details>
+    </div>
+
+    <div id="mitzvah" class="mitzvah">
+      <div class="section-title" style="color:var(--green);">Mitzvah Project</div>
+      <p>
+        Ari is supporting <strong>Arden for All</strong>, bringing theatre education to students without access to arts programming.
+      </p>
+      <p>
+        Having performed with <strong>Haddonfield Theater Arts Company (HTAC)</strong>, Ari loves acting and wanted to share that joy.
+      </p>
+      <p>
+        He raised over <strong>$1,000</strong> distributing Candygrams and volunteers in the classes with students in the city.
+      </p>
+    </div>
+
+  </div>
+
 </section>
-
-<footer class="wrap" style="padding:40px 0;opacity:.7;text-transform:uppercase;font-size:12px;letter-spacing:.12em;">
-© 2026 Ari Evan Seshasai
-</footer>
-
-<!-- RSVP MODAL -->
-<dialog id="rsvpModal">
-  <div class="modal-head">
-    RSVP
-    <button class="close" id="closeRsvp">✕</button>
-  </div>
-  <div class="modal-body">
-    <iframe 
-      src="https://ariseshasaibarmitzvah.rsvpify.com"
-      width="100%" 
-      height="800"
-      frameborder="0"
-      style="border:none;">
-    </iframe>
-  </div>
-</dialog>
 
 <script>
-const modal = document.getElementById('rsvpModal');
+const heroSlides = document.querySelectorAll('#heroRotator img');
+const dockedSlides = document.querySelectorAll('#dockedRotator img');
+let current = 0;
 
-document.getElementById('openRsvp').addEventListener('click',()=>modal.showModal());
-document.getElementById('navRsvp').addEventListener('click',e=>{
-  e.preventDefault();
-  modal.showModal();
-});
-document.getElementById('closeRsvp').addEventListener('click',()=>modal.close());
+function rotateSlides(){
+  heroSlides[current].classList.remove('active');
+  dockedSlides[current].classList.remove('active');
+  current = (current + 1) % heroSlides.length;
+  heroSlides[current].classList.add('active');
+  dockedSlides[current].classList.add('active');
+}
+
+setInterval(rotateSlides, 3200);
+
+const heroSection = document.getElementById('hero');
+const docked = document.getElementById('dockedRotator');
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting){
+      docked.classList.add('visible');
+    } else {
+      docked.classList.remove('visible');
+    }
+  });
+},{threshold:0.2});
+
+observer.observe(heroSection);
 </script>
 
 </body>

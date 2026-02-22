@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ari's Bar Mitzvah</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --red:#E81828;
+  --blue:#0E2A66;   /* darker blue */
+  --green:#004C54;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(232,24,40,.06), transparent 60%),
+    radial-gradient(circle at 80% 60%, rgba(0,76,84,.06), transparent 60%),
+    linear-gradient(#f7f6f2, #f1f1ef);
+  color:#111;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+  background:var(--blue);
+  height:60px;   /* thinner */
+}
+
+/* Thick MLB-style stripes */
+.stripes{
+  height:36px;
+  background:
+    linear-gradient(to bottom,
+      var(--red) 0px,
+      var(--red) 10px,
+      white 10px,
+      white 14px,
+      var(--green) 14px,
+      var(--green) 24px,
+      white 24px,
+      white 28px,
+      var(--red) 28px,
+      var(--red) 36px
+    );
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:60px;
+  padding:90px 20px;
+  max-width:1200px;
+  margin:auto;
+  flex-wrap:wrap;
+}
+
+.hero-text{
+  flex:1;
+  min-width:300px;
+  text-align:center;
+}
+
+.hero-title img{
+  max-width:520px;
+  width:100%;
+  margin-bottom:30px;
+}
+
+/* Decorative event lines */
+
+.line-red,
+.line-green{
+  height:4px;
+  margin:20px auto;
+  border-radius:4px;
+}
+
+.line-red{
+  width:70%;
+  background:linear-gradient(to right,
+      transparent,
+      var(--red),
+      var(--red),
+      transparent);
+}
+
+.line-green{
+  width:45%;
+  background:linear-gradient(to right,
+      transparent,
+      var(--green),
+      var(--green),
+      transparent);
+}
+
+/* Event Info */
+
+.event-info{
+  font-family:'Cormorant Garamond', serif;
+  font-size:32px;
+  color:var(--blue);
+  line-height:1.6;
+  letter-spacing:.5px;
+}
+
+/* RSVP Button */
+
+.rsvp-btn{
+  margin-top:35px;
+  padding:16px 50px;
+  background:var(--blue);
+  color:white;
+  border:none;
+  border-radius:6px;
+  font-family:'Montserrat', sans-serif;
+  font-weight:700;
+  font-size:18px;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.rsvp-btn:hover{
+  background:var(--green);
+}
+
+/* ================= IMAGE ================= */
+
+.hero-image{
+  flex:1;
+  min-width:280px;
+  display:flex;
+  justify-content:center;
+}
+
+.hero-image img{
+  max-height:460px;
+  width:auto;
+  transition:opacity .5s ease;
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,.25));
+}
+
+.fade{opacity:0;}
+
+/* ================= FEATURES ================= */
+
+.features{
+  display:flex;
+  justify-content:center;
+  gap:80px;
+  padding:50px 20px;
+  flex-wrap:wrap;
+}
+
+.features img{
+  height:90px;
+}
+
+/* ================= CONTENT SPLIT ================= */
+
+.content{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+  max-width:1200px;
+  margin:80px auto;
+  padding:0 20px;
+}
+
+iframe{
+  width:100%;
+  height:900px;
+  border:none;
+  border-radius:12px;
+  box-shadow:0 20px 50px rgba(0,0,0,.15);
+}
+
+/* FAQ */
+
+.faq details{
+  margin-bottom:15px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  overflow:hidden;
+}
+
+.faq summary{
+  padding:15px;
+  background:#f2f2f2;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.faq p{
+  padding:15px;
+  margin:0;
+  background:white;
+}
+
+/* Mitzvah */
+
+.mitzvah{
+  margin-top:40px;
+  padding:30px;
+  background:white;
+  border-left:5px solid var(--green);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+  .hero{
+    flex-direction:column;
+  }
+
+  .content{
+    grid-template-columns:1fr;
+  }
+
+  iframe{
+    height:1000px;
+  }
+
+  .event-info{
+    font-size:26px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header"></div>
+<div class="stripes"></div>
+
+<section class="hero">
+
+  <div class="hero-text">
+
+    <div class="hero-title">
+      <img src="./website-ari-title.png" alt="Ari's Bar Mitzvah">
+    </div>
+
+    <div class="line-red"></div>
+    <div class="line-green"></div>
+
+    <div class="event-info">
+      Saturday, May 9, 2026 • 5:30 PM – 11:00 PM<br>
+      Kol Ami • Cherry Hill, NJ
+    </div>
+
+    <div class="line-green"></div>
+    <div class="line-red"></div>
+
+    <button class="rsvp-btn"
+      onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">
+      RSVP
+    </button>
+
+  </div>
+
+  <div class="hero-image">
+    <img id="rotator" src="./ari-sixers.png" alt="Ari">
+  </div>
+
+</section>
+
+<div class="features">
+  <img src="./logo-ari-phillies.png">
+  <img src="./logo-ari-sixers.png">
+  <img src="./logo-eagles.png">
+</div>
+
+<section class="content">
+
+  <div id="rsvp">
+    <h2 style="color:var(--blue);">RSVP</h2>
+    <iframe src="https://ariseshasaibarmitzvah.rsvpify.com"></iframe>
+  </div>
+
+  <div>
+    <h2 style="color:var(--blue);">FAQ</h2>
+
+    <div class="faq">
+      <details>
+        <summary>What time does the celebration begin?</summary>
+        <p>Saturday, May 9, 2026 from 5:30 PM to 11:00 PM at Kol Ami in Cherry Hill, NJ.</p>
+      </details>
+
+      <details>
+        <summary>Dress Code?</summary>
+        <p>Cocktail / festive attire.</p>
+      </details>
+
+      <details>
+        <summary>Travel & Parking?</summary>
+        <p>Cherry Hill is accessible from Philadelphia. Parking available on site.</p>
+      </details>
+    </div>
+
+    <div class="mitzvah">
+      <h2 style="color:var(--green); margin-top:0;">Mitzvah Project</h2>
+      <p>
+        Ari is fundraising and volunteering with <strong>Arden for All</strong>,
+        supporting access to theater and arts education.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+const imgs=["./ari-sixers.png","./ari-phillies.png","./ari-eagles.png"];
+let i=0;
+const rot=document.getElementById("rotator");
+
+setInterval(()=>{
+  rot.classList.add("fade");
+  setTimeout(()=>{
+    i=(i+1)%imgs.length;
+    rot.src=imgs[i];
+    rot.classList.remove("fade");
+  },400);
+},4000);
+</script>
+
+</body>
+</html>

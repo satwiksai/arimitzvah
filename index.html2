@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ari's Bar Mitzvah</title>
+
+<style>
+:root{
+  --red:#E81828;
+  --blue:#1D428A;
+  --green:#004C54;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  font-family: Georgia, serif;
+  color:#111;
+
+  /* Paper-like background */
+  background:
+    radial-gradient(circle at 20% 30%, rgba(232,24,40,.08), transparent 50%),
+    radial-gradient(circle at 80% 60%, rgba(0,76,84,.08), transparent 50%),
+    linear-gradient(#f7f6f2, #f1f1ef);
+}
+
+/* ===================================== */
+/* HEADER */
+/* ===================================== */
+
+.header{
+  position:relative;
+  background:var(--blue);
+  text-align:center;
+  padding:60px 0 40px;
+}
+
+.header img{
+  height:110px;
+  position:relative;
+  z-index:5;
+}
+
+/* Thicker stripe stack */
+.stripes{
+  position:relative;
+  height:20px;
+  background:
+    linear-gradient(to bottom,
+      var(--red) 0px,
+      var(--red) 5px,
+      white 5px,
+      white 8px,
+      var(--green) 8px,
+      var(--green) 12px,
+      white 12px,
+      white 15px,
+      var(--red) 15px,
+      var(--red) 20px
+    );
+}
+
+/* ===================================== */
+/* HERO */
+/* ===================================== */
+
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:80px 20px;
+  max-width:1200px;
+  margin:auto;
+  gap:60px;
+  flex-wrap:wrap;
+}
+
+.hero-text{
+  flex:1;
+  min-width:300px;
+  text-align:center;
+}
+
+.hero-title img{
+  max-width:500px;
+  width:100%;
+  height:auto;
+  margin-bottom:20px;
+}
+
+/* Event Info */
+
+.event-lines{
+  height:3px;
+  background:var(--blue);
+  width:80%;
+  margin:25px auto;
+}
+
+.event-info{
+  font-size:28px;
+  color:var(--blue);
+  line-height:1.7;
+}
+
+.rsvp-btn{
+  margin-top:30px;
+  background:var(--blue);
+  color:white;
+  padding:14px 40px;
+  border:none;
+  border-radius:6px;
+  font-size:18px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.rsvp-btn:hover{
+  background:var(--green);
+}
+
+/* ===================================== */
+/* ROTATOR SIDE IMAGE */
+/* ===================================== */
+
+.hero-image{
+  flex:1;
+  min-width:280px;
+  display:flex;
+  justify-content:center;
+}
+
+.hero-image img{
+  max-height:450px;
+  width:auto;
+  transition:opacity .5s ease;
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,.25));
+}
+
+.fade{opacity:0;}
+
+/* ===================================== */
+/* FEATURE ICON ROW */
+/* ===================================== */
+
+.features{
+  display:flex;
+  justify-content:center;
+  gap:80px;
+  padding:40px 20px;
+  flex-wrap:wrap;
+}
+
+.features img{
+  height:90px;
+}
+
+/* ===================================== */
+/* SPLIT CONTENT */
+/* ===================================== */
+
+.content{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  max-width:1200px;
+  margin:60px auto;
+  padding:0 20px;
+}
+
+iframe{
+  width:100%;
+  height:900px;
+  border:none;
+  border-radius:12px;
+  box-shadow:0 20px 50px rgba(0,0,0,.15);
+}
+
+/* FAQ */
+
+.faq details{
+  margin-bottom:15px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  overflow:hidden;
+}
+
+.faq summary{
+  padding:15px;
+  background:#f2f2f2;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.faq p{
+  padding:15px;
+  margin:0;
+  background:white;
+}
+
+/* Mitzvah */
+
+.mitzvah{
+  margin-top:40px;
+  padding:30px;
+  background:white;
+  border-left:4px solid var(--green);
+}
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+
+@media(max-width:900px){
+
+  .hero{
+    flex-direction:column;
+  }
+
+  .content{
+    grid-template-columns:1fr;
+  }
+
+  iframe{
+    height:1000px;
+  }
+
+  .hero-title img{
+    max-width:380px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <img src="./logo-as.png" alt="Ari Logo">
+</div>
+<div class="stripes"></div>
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-text">
+
+    <div class="hero-title">
+      <img src="./website-ari-title.png" alt="Ari's Bar Mitzvah">
+    </div>
+
+    <div class="event-lines"></div>
+
+    <div class="event-info">
+      Saturday, May 9, 2026 • 5:30 PM – 11:00 PM<br>
+      Kol Ami • Cherry Hill, NJ
+    </div>
+
+    <div class="event-lines"></div>
+
+    <button class="rsvp-btn"
+      onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">
+      RSVP
+    </button>
+
+  </div>
+
+  <div class="hero-image">
+    <img id="rotator" src="./ari-sixers.png" alt="Ari">
+  </div>
+
+</section>
+
+<!-- FEATURE LOGOS -->
+<div class="features">
+  <img src="./logo-ari-phillies.png">
+  <img src="./logo-ari-sixers.png">
+  <img src="./logo-eagles.png">
+</div>
+
+<!-- SPLIT CONTENT -->
+<section class="content">
+
+  <div id="rsvp">
+    <h2 style="color:var(--blue);">RSVP</h2>
+    <iframe src="https://ariseshasaibarmitzvah.rsvpify.com"></iframe>
+  </div>
+
+  <div>
+    <h2 style="color:var(--blue);">FAQ</h2>
+
+    <div class="faq">
+      <details>
+        <summary>What time does the celebration begin?</summary>
+        <p>Saturday, May 9, 2026 from 5:30 PM to 11:00 PM at Kol Ami in Cherry Hill, NJ.</p>
+      </details>
+
+      <details>
+        <summary>Dress Code?</summary>
+        <p>Cocktail / festive attire.</p>
+      </details>
+
+      <details>
+        <summary>Travel & Parking?</summary>
+        <p>Cherry Hill is accessible from Philadelphia. Parking available on site.</p>
+      </details>
+    </div>
+
+    <div class="mitzvah">
+      <h2 style="color:var(--green); margin-top:0;">Mitzvah Project</h2>
+      <p>
+        Ari is fundraising and volunteering with <strong>Arden for All</strong>,
+        supporting access to theater and arts education.
+        Given his love of acting, this project helps ensure more children
+        can experience the creativity and confidence that comes from the stage.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+const imgs=["./ari-sixers.png","./ari-phillies.png","./ari-eagles.png"];
+let i=0;
+const rot=document.getElementById("rotator");
+
+setInterval(()=>{
+  rot.classList.add("fade");
+  setTimeout(()=>{
+    i=(i+1)%imgs.length;
+    rot.src=imgs[i];
+    rot.classList.remove("fade");
+  },400);
+},4000);
+</script>
+
+</body>
+</html>

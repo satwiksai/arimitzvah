@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ari's Bar Mitzvah</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --red:#E81828;
+  --blue:#0E2A66;
+  --green:#004C54;
+
+  --panel-bg-1: rgba(255,255,255,.88);
+  --panel-bg-2: rgba(245,244,240,.88);
+
+  --card: rgba(255,255,255,.92);
+  --card-2: rgba(250,249,246,.92);
+  --border: rgba(0,0,0,.08);
+  --shadow: 0 22px 55px rgba(0,0,0,.14);
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(232,24,40,.05), transparent 60%),
+    radial-gradient(circle at 80% 60%, rgba(0,76,84,.05), transparent 60%),
+    linear-gradient(#f7f6f2, #f1f1ef);
+  color:#111;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+  background:var(--blue);
+  height:55px;
+}
+
+.stripes{
+  height:36px;
+  background:
+    linear-gradient(to bottom,
+      var(--red) 0px,
+      var(--red) 10px,
+      white 10px,
+      white 14px,
+      var(--green) 14px,
+      var(--green) 24px,
+      white 24px,
+      white 28px,
+      var(--red) 28px,
+      var(--red) 36px
+    );
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:50px;
+  padding:60px 20px 110px;
+  max-width:1200px;
+  margin:auto;
+  flex-wrap:wrap;
+  position:relative;
+  z-index:1;
+}
+
+.hero-text{
+  flex:1;
+  min-width:300px;
+  text-align:center;
+}
+
+.hero-title img{
+  max-width:500px;
+  width:100%;
+  margin-bottom:30px;
+}
+
+.event-wrapper{
+  container-type:inline-size;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
+
+.line-red,.line-green{
+  height:4px;
+  border-radius:4px;
+}
+
+.line-red{
+  width:70cqw;
+  background:linear-gradient(to right,transparent,var(--red) 20%,var(--red) 80%,transparent);
+}
+
+.line-green{
+  width:45cqw;
+  background:linear-gradient(to right,transparent,var(--green) 20%,var(--green) 80%,transparent);
+}
+
+.event-info{
+  font-family:'Cormorant Garamond', serif;
+  font-size: clamp(20px, 4cqw, 34px);
+  color:var(--blue);
+  white-space:nowrap;
+  line-height:1.6;
+  text-align:center;
+}
+
+/* ================= HERO IMAGE (CROSSFADE + FASTER KEN BURNS) ================= */
+
+.hero-image{
+  flex:1;
+  min-width:280px;
+  display:flex;
+  justify-content:center;
+  position:relative;
+  height:460px;
+}
+
+.hero-image img{
+  position:absolute;
+  max-height:460px;
+  width:auto;
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,.25));
+  opacity:0;
+  transform: scale(1);
+  /* Ken Burns faster now: 4s instead of 6s */
+  transition: opacity 1.2s ease-in-out, transform 4s ease-in-out;
+}
+
+.hero-image img.active{
+  opacity:1;
+  transform: scale(1.07);
+}
+
+/* ================= OVERLAY FEATURE PANEL ================= */
+
+.overlay-features{
+  max-width:1100px;
+  margin:-150px auto 80px;
+  padding:55px 50px;
+
+  background:
+    linear-gradient(135deg, var(--panel-bg-1), var(--panel-bg-2)),
+    repeating-linear-gradient(
+      45deg,
+      rgba(0,0,0,.02),
+      rgba(0,0,0,.02) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+
+  backdrop-filter: blur(6px);
+  border-radius:22px;
+  box-shadow:0 30px 70px rgba(0,0,0,.15);
+
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+  text-align:center;
+  position:relative;
+  z-index:3;
+}
+
+.overlay-features::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(232,24,40,.04), transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(0,76,84,.04), transparent 50%);
+  border-radius:22px;
+  pointer-events:none;
+}
+
+.feature-card{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+.feature-card img{
+  height: clamp(130px, 12vw, 190px);
+  width:auto;
+}
+
+.feature-card button{
+  font-family:'Montserrat', sans-serif;
+  font-weight:700;
+  letter-spacing:2px;
+  padding:14px 38px;
+  background:var(--blue);
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.2s;
+  font-size:16px;
+  box-shadow: 0 10px 26px rgba(14,42,102,.18);
+}
+
+.feature-card button:hover{
+  background:var(--green);
+  transform: translateY(-1px);
+}
+
+/* ================= LOWER TWO-COLUMN SECTION (RESTORED) ================= */
+
+.content{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:70px;
+  max-width:1200px;
+  margin:80px auto;
+  padding:0 20px;
+  align-items:start;
+}
+
+.section-title{
+  font-family:'Cormorant Garamond', serif;
+  font-size: 34px;
+  color: var(--blue);
+  margin: 0 0 18px;
+  letter-spacing:.3px;
+}
+
+.card{
+  background: linear-gradient(135deg, var(--card), var(--card-2));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+/* RSVP iframe */
+iframe{
+  width:100%;
+  height:920px;
+  border:none;
+  border-radius:14px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.14);
+}
+
+/* ================= MODERN FAQ ACCORDION ================= */
+
+.faq{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.faq details{
+  background: rgba(255,255,255,.9);
+  border: 1px solid rgba(0,0,0,.09);
+  border-radius: 14px;
+  overflow:hidden;
+  transition: box-shadow .25s ease, transform .25s ease, background .25s ease;
+}
+
+.faq details:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.10);
+}
+
+.faq summary{
+  list-style:none;
+  cursor:pointer;
+  padding:16px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+
+  font-family:'Montserrat', sans-serif;
+  font-weight:700;
+  font-size:16px;
+  letter-spacing:.2px;
+  background: rgba(240,240,240,.75);
+}
+
+.faq summary::-webkit-details-marker{display:none;}
+
+.faq summary .chev{
+  width:28px;
+  height:28px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  background: rgba(14,42,102,.10);
+  color: var(--blue);
+  transition: transform .25s ease, background .25s ease;
+  flex: 0 0 auto;
+}
+
+.faq details[open] summary .chev{
+  transform: rotate(180deg);
+  background: rgba(0,76,84,.12);
+  color: var(--green);
+}
+
+.faq .answer{
+  padding: 14px 18px 18px;
+  font-family:'Cormorant Garamond', serif;
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(17,17,17,.92);
+  background: rgba(255,255,255,.96);
+  border-top: 1px solid rgba(0,0,0,.07);
+}
+
+/* Mitzvah card */
+.mitzvah h3{
+  margin: 18px 0 10px;
+  font-family:'Cormorant Garamond', serif;
+  font-size: 28px;
+  color: var(--green);
+}
+
+.mitzvah p{
+  margin: 0 0 12px;
+  font-family:'Cormorant Garamond', serif;
+  font-size: 19px;
+  line-height: 1.75;
+  color: rgba(17,17,17,.92);
+}
+
+/* small accents */
+.muted{
+  color: rgba(17,17,17,.72);
+  font-size: 16px;
+  font-family:'Montserrat', sans-serif;
+  letter-spacing:.2px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+  .hero{flex-direction:column;}
+  .hero-image{height:380px;}
+  .overlay-features{
+    grid-template-columns:1fr;
+    margin:-80px 20px 60px;
+    padding:40px 25px;
+  }
+  .feature-card img{
+    height: clamp(100px, 20vw, 150px);
+  }
+  .content{
+    grid-template-columns: 1fr;
+    gap: 26px;
+    margin: 50px auto;
+  }
+  iframe{height: 980px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header"></div>
+<div class="stripes"></div>
+
+<section class="hero">
+
+  <div class="hero-text">
+    <div class="hero-title">
+      <img src="./website-ari-title.png" alt="Ari's Bar Mitzvah">
+    </div>
+
+    <div class="event-wrapper">
+      <div class="line-red"></div>
+      <div class="line-green"></div>
+
+      <div class="event-info">
+        Saturday, May 9, 2026 • 5:30 PM – 11:00 PM<br>
+        Congregation Kol Ami<br>
+        1101 Springdale Road • Cherry Hill, NJ 08003
+      </div>
+
+      <div class="line-green"></div>
+      <div class="line-red"></div>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <img src="./ari-sixers.png" class="active" alt="Ari Sixers">
+    <img src="./ari-phillies.png" alt="Ari Phillies">
+    <img src="./ari-eagles.png" alt="Ari Eagles">
+  </div>
+
+</section>
+
+<div class="overlay-features">
+  <div class="feature-card">
+    <img src="./logo-ari-phillies.png" alt="RSVP">
+    <button onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</button>
+  </div>
+
+  <div class="feature-card">
+    <img src="./logo-ari-sixers.png" alt="FAQ">
+    <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
+  </div>
+
+  <div class="feature-card">
+    <img src="./logo-eagles.png" alt="Mitzvah Project">
+    <button onclick="document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah Project</button>
+  </div>
+</div>
+
+<section class="content">
+
+  <!-- LEFT: RSVP -->
+  <div id="rsvp">
+    <div class="section-title">RSVP</div>
+    <iframe src="https://ariseshasaibarmitzvah.rsvpify.com" title="RSVPify"></iframe>
+    <div class="muted" style="margin-top:10px;">If the form doesn’t load, try refreshing or opening in a new tab.</div>
+  </div>
+
+  <!-- RIGHT: FAQ + MITZVAH -->
+  <div>
+    <div id="faq" class="section-title">Frequently Asked Questions</div>
+
+    <div class="faq">
+      <details>
+        <summary>
+          What should I wear?
+          <span class="chev">⌄</span>
+        </summary>
+        <div class="answer">
+          Dressy / festive is perfect. For the service, guests often wear cocktail attire or “dressy church/synagogue” style — suits or slacks + button-down (tie optional), and dresses or elegant separates. Comfortable shoes are a good idea for mingling and dancing.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          What’s the schedule?
+          <span class="chev">⌄</span>
+        </summary>
+        <div class="answer">
+          Please arrive <strong>5:30 PM sharp</strong> for the service. Afterward: cocktail hour + games, then dinner, speeches, and dancing through the end of the evening.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Where do I book a hotel?
+          <span class="chev">⌄</span>
+        </summary>
+        <div class="answer">
+          We recommend staying in Cherry Hill / Mount Laurel / Philadelphia suburbs. We’ll share a preferred option in the <strong>Hotel Block</strong> section (and booking early is encouraged for that weekend).
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          How does pickup work?
+          <span class="chev">⌄</span>
+        </summary>
+        <div class="answer">
+          Pickup is easiest at the main entrance. If you’re using a car service, set the pickup location to <strong>Congregation Kol Ami</strong> and plan to step outside a few minutes before pickup time.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Are kids welcome?
+          <span class="chev">⌄</span>
+        </summary>
+        <div class="answer">
+          If your invitation includes children, we’d love to have them — there will be games and kid-friendly fun during the celebration.
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          Is there anything else I should know?
+          <span class="chev">⌄</span>
+        </summary>
+        <div class="answer">
+          Please silence phones during the service. Kippahs are typically available at the entrance. Most importantly: come ready to celebrate Ari!
+        </div>
+      </details>
+    </div>
+
+    <div id="mitzvah" class="card mitzvah" style="margin-top:22px;">
+      <div class="section-title" style="margin:0 0 8px; color:var(--green);">Mitzvah Project</div>
+      <p>
+        Ari is supporting <strong>Arden for All</strong>, a program that brings theatre and arts education into schools
+        that might not otherwise have access — helping students build confidence, creativity, and storytelling skills.
+      </p>
+      <p>
+        Ari has performed with <strong>Haddonfield Theater Arts Company (HTAC)</strong> for years and loves acting.
+        For his mitzvah project, he wanted to share that joy with kids who have fewer opportunities.
+      </p>
+      <p>
+        He fundraised by distributing <strong>Candygrams</strong> around town for Valentine’s Day — raising <strong>over $1,000</strong> —
+        and he’s also volunteering in the classes with students in the city.
+      </p>
+      <div class="muted">Thank you for supporting Ari’s project and the power of arts education.</div>
+    </div>
+  </div>
+
+</section>
+
+<script>
+const slides = document.querySelectorAll('.hero-image img');
+let current = 0;
+setInterval(() => {
+  slides[current].classList.remove('active');
+  current = (current + 1) % slides.length;
+  slides[current].classList.add('active');
+}, 5000);
+</script>
+
+</body>
+</html>

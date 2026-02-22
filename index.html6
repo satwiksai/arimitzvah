@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ari's Bar Mitzvah</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --red:#E81828;
+  --blue:#0E2A66;
+  --green:#004C54;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(232,24,40,.05), transparent 60%),
+    radial-gradient(circle at 80% 60%, rgba(0,76,84,.05), transparent 60%),
+    linear-gradient(#f7f6f2, #f1f1ef);
+  color:#111;
+}
+
+/* HEADER */
+
+.header{background:var(--blue);height:55px;}
+.stripes{
+  height:36px;
+  background:
+    linear-gradient(to bottom,
+      var(--red) 0px,var(--red) 10px,
+      white 10px,white 14px,
+      var(--green) 14px,var(--green) 24px,
+      white 24px,white 28px,
+      var(--red) 28px,var(--red) 36px
+    );
+}
+
+/* HERO */
+
+.hero-wrapper{display:flex;justify-content:center;}
+
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:60px;
+  padding:60px 20px 110px;
+  max-width:1200px;
+  width:100%;
+}
+
+.hero-text{flex:1;text-align:center;}
+
+.hero-title img{max-width:480px;width:100%;margin-bottom:28px;}
+
+.event-info{
+  font-family:'Cormorant Garamond', serif;
+  font-size:28px;
+  color:var(--blue);
+  line-height:1.6;
+}
+
+/* ROTATOR */
+
+.rotator{
+  position:relative;
+  width:480px;
+  height:460px;
+}
+
+.rotator img{
+  position:absolute;
+  max-height:460px;
+  width:auto;
+  opacity:0;
+  transform:scale(1);
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,.25));
+  transition: opacity .8s ease-in-out, transform 2.5s ease-in-out;
+}
+
+.rotator img.active{
+  opacity:1;
+  transform:scale(1.08);
+}
+
+/* OVERLAY FEATURE PANEL (MORE TRANSPARENT) */
+
+.overlay-features{
+  max-width:1100px;
+  margin:-150px auto 80px;
+  padding:55px 50px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.65),
+      rgba(245,244,240,.65)
+    );
+
+  backdrop-filter: blur(8px);
+  border-radius:22px;
+  box-shadow:0 25px 55px rgba(0,0,0,.12);
+
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+  text-align:center;
+}
+
+.feature-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+}
+
+.feature-card img{
+  height:clamp(130px,12vw,190px);
+}
+
+.feature-card button{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  padding:14px 38px;
+  background:var(--blue);
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* CONTENT GRID */
+
+.content{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  max-width:1200px;
+  margin:80px auto;
+  padding:0 20px;
+}
+
+.section-title{
+  font-family:'Cormorant Garamond', serif;
+  font-size:32px;
+  color:var(--blue);
+  margin-bottom:18px;
+}
+
+iframe{
+  width:100%;
+  height:920px;
+  border:none;
+  border-radius:12px;
+  box-shadow:0 18px 50px rgba(0,0,0,.14);
+}
+
+/* FAQ */
+
+.faq details{
+  margin-bottom:14px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(0,0,0,.08);
+}
+
+.faq summary{
+  cursor:pointer;
+  padding:16px;
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  background:rgba(240,240,240,.8);
+}
+
+.faq .answer{
+  padding:16px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;
+  line-height:1.7;
+}
+
+/* MITZVAH */
+
+.mitzvah{
+  margin-top:30px;
+  padding:24px;
+  border-radius:14px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 16px 45px rgba(0,0,0,.12);
+  border-left:6px solid var(--green);
+}
+
+.mitzvah p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;
+  line-height:1.7;
+}
+
+/* DOCKED ROTATOR (NOW PUSHES CONTENT DOWN) */
+
+.docked-rotator{
+  display:none;
+  margin-bottom:28px;
+}
+
+.docked-rotator.visible{
+  display:block;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+  .hero{flex-direction:column;align-items:center;text-align:center;}
+  .rotator{width:100%;max-width:400px;height:380px;}
+  .overlay-features{grid-template-columns:1fr;margin:-80px 20px 60px;}
+  .content{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="header"></div>
+<div class="stripes"></div>
+
+<div class="hero-wrapper">
+<section class="hero" id="hero">
+
+  <div class="hero-text">
+    <div class="hero-title">
+      <img src="./website-ari-title.png">
+    </div>
+
+    <div class="event-info">
+      Saturday, May 9, 2026 • 5:30 PM – 11:00 PM<br>
+      Congregation Kol Ami<br>
+      1101 Springdale Road • Cherry Hill, NJ 08003
+    </div>
+  </div>
+
+  <div class="rotator" id="heroRotator">
+    <img src="./ari-sixers.png" class="active">
+    <img src="./ari-phillies.png">
+    <img src="./ari-eagles.png">
+  </div>
+
+</section>
+</div>
+
+<div class="overlay-features">
+  <div class="feature-card">
+    <img src="./logo-ari-phillies.png">
+    <button onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</button>
+  </div>
+  <div class="feature-card">
+    <img src="./logo-ari-sixers.png">
+    <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
+  </div>
+  <div class="feature-card">
+    <img src="./logo-eagles.png">
+    <button onclick="document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah Project</button>
+  </div>
+</div>
+
+<section class="content">
+
+  <div id="rsvp">
+    <div class="section-title">RSVP</div>
+    <iframe src="https://ariseshasaibarmitzvah.rsvpify.com"></iframe>
+  </div>
+
+  <div>
+
+    <!-- Docked Rotator -->
+    <div class="rotator docked-rotator" id="dockedRotator">
+      <img src="./ari-sixers.png" class="active">
+      <img src="./ari-phillies.png">
+      <img src="./ari-eagles.png">
+    </div>
+
+    <div id="faq" class="section-title">Frequently Asked Questions</div>
+
+    <div class="faq">
+      <details>
+        <summary>What should I wear?</summary>
+        <div class="answer">Dressy festive attire recommended. Comfortable shoes encouraged for dancing.</div>
+      </details>
+      <details>
+        <summary>What’s the schedule?</summary>
+        <div class="answer">Arrive 5:30 PM sharp for service, followed by cocktails & games, then dinner, speeches, and dancing.</div>
+      </details>
+    </div>
+
+    <div id="mitzvah" class="mitzvah">
+      <div class="section-title" style="color:var(--green);">Mitzvah Project</div>
+      <p>
+        Ari is supporting <strong>Arden for All</strong>, a program bringing theatre education into schools that lack arts access — building confidence, creativity, and literacy.
+      </p>
+      <p>
+        Having performed with <strong>Haddonfield Theater Arts Company (HTAC)</strong> for years, Ari loves acting and wanted to share that joy.
+      </p>
+      <p>
+        He raised over <strong>$1,000</strong> distributing Candygrams on Valentine’s Day and is volunteering in the classes with students in the city.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+const heroSlides = document.querySelectorAll('#heroRotator img');
+const dockedSlides = document.querySelectorAll('#dockedRotator img');
+let current = 0;
+
+function rotateSlides(){
+  heroSlides[current].classList.remove('active');
+  dockedSlides[current].classList.remove('active');
+  current = (current + 1) % heroSlides.length;
+  heroSlides[current].classList.add('active');
+  dockedSlides[current].classList.add('active');
+}
+
+setInterval(rotateSlides, 3200);
+
+const heroSection = document.getElementById('hero');
+const docked = document.getElementById('dockedRotator');
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting){
+      docked.classList.add('visible');
+    } else {
+      docked.classList.remove('visible');
+    }
+  });
+},{threshold:0.2});
+
+observer.observe(heroSection);
+</script>
+
+</body>
+</html>
