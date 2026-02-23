@@ -8,6 +8,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
+/* ── #2: @property registrations for animated gradient mesh ── */
+@property --mesh-x1{ syntax:'<percentage>'; inherits:false; initial-value:20%; }
+@property --mesh-y1{ syntax:'<percentage>'; inherits:false; initial-value:30%; }
+@property --mesh-x2{ syntax:'<percentage>'; inherits:false; initial-value:80%; }
+@property --mesh-y2{ syntax:'<percentage>'; inherits:false; initial-value:60%; }
+@property --mesh-x3{ syntax:'<percentage>'; inherits:false; initial-value:50%; }
+@property --mesh-y3{ syntax:'<percentage>'; inherits:false; initial-value:90%; }
+@property --bg-tint{ syntax:'<color>'; inherits:false; initial-value:rgba(0,76,84,.09); }
+
+@keyframes meshDrift{
+  0%{   --mesh-x1:20%; --mesh-y1:30%; --mesh-x2:80%; --mesh-y2:60%; --mesh-x3:50%; --mesh-y3:90%;
+        --bg-tint:rgba(0,76,84,.09); }
+  33%{  --mesh-x1:60%; --mesh-y1:15%; --mesh-x2:30%; --mesh-y2:80%; --mesh-x3:75%; --mesh-y3:45%;
+        --bg-tint:rgba(14,42,102,.09); }
+  66%{  --mesh-x1:40%; --mesh-y1:70%; --mesh-x2:70%; --mesh-y2:20%; --mesh-x3:20%; --mesh-y3:55%;
+        --bg-tint:rgba(232,24,40,.07); }
+  100%{ --mesh-x1:20%; --mesh-y1:30%; --mesh-x2:80%; --mesh-y2:60%; --mesh-x3:50%; --mesh-y3:90%;
+        --bg-tint:rgba(0,76,84,.09); }
+}
+
 :root{
   --red:#E81828;
   --blue:#0E2A66;
@@ -18,17 +38,89 @@
 
 body{
   margin:0;
+  /* #2: Animated gradient mesh background */
   background:
-    radial-gradient(circle at 20% 30%, rgba(232,24,40,.05), transparent 60%),
-    radial-gradient(circle at 80% 60%, rgba(0,76,84,.05), transparent 60%),
-    linear-gradient(#f7f6f2, #f1f1ef);
+    radial-gradient(circle at var(--mesh-x1) var(--mesh-y1), rgba(232,24,40,.13), transparent 55%),
+    radial-gradient(circle at var(--mesh-x2) var(--mesh-y2), rgba(0,76,84,.12), transparent 55%),
+    radial-gradient(circle at var(--mesh-x3) var(--mesh-y3), rgba(14,42,102,.10), transparent 50%),
+    linear-gradient(
+      var(--bg-tint) 0%,
+      #f4f3ef 45%,
+      #f1f1ef 100%
+    );
+  animation: meshDrift 18s ease-in-out infinite;
   color:#111;
+  /* #6: Custom cursor */
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22'><circle cx='11' cy='11' r='9.5' fill='%230E2A66' stroke='%23E81828' stroke-width='2'/><circle cx='11' cy='11' r='3' fill='white'/></svg>") 11 11, auto;
+}
+
+a, button, summary, .feature-card{
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><circle cx='14' cy='14' r='12' fill='%23E81828' stroke='%230E2A66' stroke-width='2'/><path d='M14 6l2 5h5l-4 3 1.5 5L14 16l-4.5 3L11 14l-4-3h5z' fill='white'/></svg>") 14 14, pointer;
+}
+
+/* ── Noise texture overlay ── */
+.noise-overlay{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+}
+
+/* ── Floating bokeh particles ── */
+.bokeh-wrap{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.bokeh{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(6px);
+  opacity:0;
+  will-change:transform,opacity;
+}
+
+@keyframes bokehFloat1{
+  0%{   transform:translate(0,0) scale(1);     opacity:0; }
+  10%{  opacity:.45; }
+  50%{  transform:translate(120px,-220px) scale(1.2); opacity:.35; }
+  90%{  opacity:.45; }
+  100%{ transform:translate(240px,-440px) scale(1);   opacity:0; }
+}
+@keyframes bokehFloat2{
+  0%{   transform:translate(0,0) scale(1);     opacity:0; }
+  10%{  opacity:.40; }
+  50%{  transform:translate(-100px,-280px) scale(1.15); opacity:.30; }
+  90%{  opacity:.40; }
+  100%{ transform:translate(-200px,-560px) scale(1);    opacity:0; }
+}
+@keyframes bokehFloat3{
+  0%{   transform:translate(0,0) scale(1);     opacity:0; }
+  10%{  opacity:.35; }
+  50%{  transform:translate(80px,-200px) scale(1.25); opacity:.28; }
+  90%{  opacity:.35; }
+  100%{ transform:translate(160px,-400px) scale(1);  opacity:0; }
+}
+
+/* Ensure all page content sits above background effects */
+.header-wrap, .hero-wrapper, .overlay-features, .content, .floating-nav{
+  position:relative;
+  z-index:1;
 }
 
 /* HEADER */
 .header-wrap{
-  position:relative;
-  z-index:10;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:50;
 }
 .header{background:var(--blue);height:55px;}
 .stripes{
@@ -59,7 +151,7 @@ body{
 }
 
 /* HERO */
-.hero-wrapper{display:flex;justify-content:center;}
+.hero-wrapper{display:flex;justify-content:center;padding-top:91px;}
 
 .hero{
   display:flex;
@@ -74,7 +166,7 @@ body{
 .hero-text{flex:1;text-align:center;}
 .hero-title img{max-width:480px;width:100%;margin-bottom:28px;}
 
-/* Decorative tapered swoosh dividers around event info */
+/* ── #12: Animated SVG swoosh dividers ── */
 .event-divider{
   display:flex;
   flex-direction:column;
@@ -90,11 +182,27 @@ body{
   overflow:visible;
 }
 
+.event-divider ellipse{
+  clip-path: inset(0 50% 0 50%);
+  transition: clip-path 1s cubic-bezier(.22,1,.36,1);
+}
+
+.event-divider.swoosh-visible ellipse{
+  clip-path: inset(0 0% 0 0%);
+}
+
+/* stagger the second swoosh line */
+.event-divider svg:nth-child(2) ellipse{
+  transition-delay:.15s;
+}
+
+/* #11: text-wrap balance */
 .event-info{
   font-family:'Cormorant Garamond', serif;
   font-size:28px;
   color:var(--blue);
   line-height:1.6;
+  text-wrap:balance;
 }
 
 /* RSVP external link */
@@ -144,26 +252,53 @@ body{
   transform: translateX(-50%) scale(1.08);
 }
 
-/* OVERLAY NAV PANEL */
+/* ── #5: Glassmorphism depth layers ── */
+/* OVERLAY NAV PANEL — enhanced glassmorphism */
 .overlay-features{
+  position:relative;
   max-width:1100px;
   margin:-150px auto 80px;
   padding:50px 40px;
-  background: linear-gradient(135deg, rgba(255,255,255,.60), rgba(245,244,240,.60));
-  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgba(255,255,255,.55), rgba(245,244,240,.45));
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
   border-radius:22px;
-  box-shadow:0 25px 55px rgba(0,0,0,.10);
+  border:1px solid rgba(255,255,255,.45);
+  box-shadow:
+    0 25px 55px rgba(0,0,0,.10),
+    inset 0 1px 0 rgba(255,255,255,.6);
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:40px;
   text-align:center;
 }
 
+/* #13: Feature card base + tilt container */
 .feature-card{
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:14px;
+  perspective:600px;
+}
+
+.feature-card-inner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:14px;
+  padding:20px;
+  border-radius:16px;
+  background: linear-gradient(135deg, rgba(255,255,255,.50), rgba(255,255,255,.20));
+  border:1px solid rgba(255,255,255,.50);
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  transition: transform .15s ease-out, box-shadow .15s ease-out;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+
+.feature-card-inner:hover{
+  box-shadow: 0 16px 40px rgba(0,0,0,.12);
 }
 
 .feature-card img{
@@ -179,8 +314,13 @@ body{
   color:white;
   border:none;
   border-radius:10px;
-  cursor:pointer;
   font-size:15px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.feature-card button:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(14,42,102,.25);
 }
 
 /* CONTENT GRID */
@@ -194,11 +334,13 @@ body{
   align-items:start;
 }
 
+/* #11: text-wrap balance on section titles */
 .section-title{
   font-family:'Cormorant Garamond', serif;
   font-size:32px;
   color:var(--blue);
   margin:0 0 18px;
+  text-wrap:balance;
 }
 
 iframe{
@@ -219,15 +361,19 @@ iframe{
   height:380px;
 }
 
-/* FAQ OVERLAY BOX — overlaps bottom of docked rotator like the hero overlay */
+/* ── #5: FAQ OVERLAY BOX — enhanced glassmorphism ── */
 .faq-overlay-box{
   position:relative;
   margin-top:-35px;
   padding:30px 28px 28px;
-  background: linear-gradient(135deg, rgba(255,255,255,.60), rgba(245,244,240,.60));
-  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgba(255,255,255,.55), rgba(245,244,240,.45));
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
   border-radius:22px;
-  box-shadow:0 25px 55px rgba(0,0,0,.10);
+  border:1px solid rgba(255,255,255,.45);
+  box-shadow:
+    0 25px 55px rgba(0,0,0,.10),
+    inset 0 1px 0 rgba(255,255,255,.6);
   z-index:2;
 }
 
@@ -236,12 +382,14 @@ iframe{
   margin-top:0;
   background:none;
   backdrop-filter:none;
+  -webkit-backdrop-filter:none;
   border-radius:0;
   box-shadow:none;
+  border:none;
   padding:0;
 }
 
-/* FAQ (elevated but still simple/clean) */
+/* ── #3: FAQ smooth open/close transitions ── */
 .faq{
   display:flex;
   flex-direction:column;
@@ -251,23 +399,25 @@ iframe{
 .faq details{
   border-radius:14px;
   overflow:hidden;
-  border:1px solid rgba(0,0,0,.08);
-  background: rgba(255,255,255,.90);
+  border:1px solid rgba(255,255,255,.45);
+  background: linear-gradient(135deg, rgba(255,255,255,.85), rgba(255,255,255,.70));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.05), inset 0 1px 0 rgba(255,255,255,.5);
   transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .faq details:hover{
   transform: translateY(-1px);
-  box-shadow: 0 14px 34px rgba(0,0,0,.10);
+  box-shadow: 0 14px 34px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.5);
 }
 
 .faq summary{
   list-style:none;
-  cursor:pointer;
   padding:16px 18px;
   font-family:'Montserrat',sans-serif;
   font-weight:700;
-  background:rgba(240,240,240,.82);
+  background:rgba(240,240,240,.65);
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -281,7 +431,7 @@ iframe{
   display:grid;place-items:center;
   background: rgba(14,42,102,.10);
   color: var(--blue);
-  transition: transform .2s ease, background .2s ease;
+  transition: transform .3s ease, background .3s ease;
   flex:0 0 auto;
 }
 
@@ -291,23 +441,54 @@ iframe{
   color: var(--green);
 }
 
+/* #3: Smooth answer reveal via grid transition */
+.faq .answer-wrap{
+  display:grid;
+  grid-template-rows:0fr;
+  transition: grid-template-rows .35s cubic-bezier(.22,1,.36,1);
+}
+
+.faq details[open] .answer-wrap{
+  grid-template-rows:1fr;
+}
+
 .faq .answer{
+  overflow:hidden;
+}
+
+.faq .answer-inner{
   padding:14px 18px 18px;
   font-family:'Cormorant Garamond',serif;
   font-size:19px;
   line-height:1.75;
-  background: rgba(255,255,255,.96);
+  background: rgba(255,255,255,.80);
   border-top: 1px solid rgba(0,0,0,.06);
 }
 
-/* MITZVAH */
+.faq .answer a{
+  color:var(--blue);
+  text-decoration:none;
+  border-bottom:1px solid rgba(14,42,102,.30);
+  transition: border-color .2s;
+}
+
+.faq .answer a:hover{
+  border-bottom-color:var(--blue);
+}
+
+/* ── #5: MITZVAH — enhanced glassmorphism ── */
 .mitzvah{
   margin-top:18px;
   padding:18px 18px 20px;
   border-radius:16px;
-  background:rgba(255,255,255,.92);
+  background: linear-gradient(135deg, rgba(255,255,255,.80), rgba(255,255,255,.65));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-left:6px solid var(--green);
-  box-shadow: 0 14px 40px rgba(0,0,0,.10);
+  border-top:1px solid rgba(255,255,255,.45);
+  border-right:1px solid rgba(255,255,255,.30);
+  border-bottom:1px solid rgba(255,255,255,.30);
+  box-shadow: 0 14px 40px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.5);
 }
 
 .mitzvah p{
@@ -324,6 +505,51 @@ iframe{
   font-size:13px;
   letter-spacing:.2px;
   color: rgba(17,17,17,.65);
+}
+
+/* ── #9: Sticky floating nav pill ── */
+.floating-nav{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  z-index:100;
+  display:flex;
+  gap:6px;
+  padding:8px 10px;
+  background: linear-gradient(135deg, rgba(14,42,102,.88), rgba(14,42,102,.92));
+  backdrop-filter:blur(16px) saturate(1.4);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 12px 40px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.12);
+  opacity:0;
+  pointer-events:none;
+  transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
+}
+
+.floating-nav.visible{
+  transform:translateX(-50%) translateY(0);
+  opacity:1;
+  pointer-events:auto;
+}
+
+.floating-nav a{
+  font-family:'Montserrat',sans-serif;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.85);
+  text-decoration:none;
+  padding:8px 18px;
+  border-radius:999px;
+  transition: background .2s, color .2s;
+}
+
+.floating-nav a:hover{
+  background:rgba(255,255,255,.15);
+  color:white;
 }
 
 /* MOBILE */
@@ -366,15 +592,59 @@ iframe{
     margin-top:0;
     background:none;
     backdrop-filter:none;
+    -webkit-backdrop-filter:none;
     border-radius:0;
     box-shadow:none;
+    border:none;
     padding:0;
+  }
+
+  .floating-nav{
+    bottom:14px;
+    padding:6px 8px;
+  }
+
+  .floating-nav a{
+    font-size:11px;
+    padding:7px 14px;
   }
 }
 </style>
 </head>
 
 <body>
+
+<!-- Noise texture overlay -->
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- Floating bokeh particles -->
+<div class="bokeh-wrap" aria-hidden="true">
+  <div class="bokeh" style="width:22px;height:22px;background:rgba(232,24,40,.55);left:8%;top:85%;animation:bokehFloat1 14s ease-in-out infinite -4s;"></div>
+  <div class="bokeh" style="width:28px;height:28px;background:rgba(14,42,102,.45);left:22%;top:90%;animation:bokehFloat2 18s ease-in-out infinite -7s;"></div>
+  <div class="bokeh" style="width:18px;height:18px;background:rgba(0,76,84,.50);left:38%;top:75%;animation:bokehFloat3 16s ease-in-out infinite -3s;"></div>
+  <div class="bokeh" style="width:24px;height:24px;background:rgba(232,24,40,.45);left:55%;top:82%;animation:bokehFloat2 20s ease-in-out infinite -10s;"></div>
+  <div class="bokeh" style="width:20px;height:20px;background:rgba(14,42,102,.50);left:70%;top:92%;animation:bokehFloat1 15s ease-in-out infinite -6s;"></div>
+  <div class="bokeh" style="width:26px;height:26px;background:rgba(0,76,84,.42);left:85%;top:78%;animation:bokehFloat3 19s ease-in-out infinite -9s;"></div>
+  <div class="bokeh" style="width:16px;height:16px;background:rgba(232,24,40,.48);left:15%;top:95%;animation:bokehFloat3 13s ease-in-out infinite -5s;"></div>
+  <div class="bokeh" style="width:30px;height:30px;background:rgba(14,42,102,.40);left:45%;top:88%;animation:bokehFloat1 22s ease-in-out infinite -12s;"></div>
+  <div class="bokeh" style="width:19px;height:19px;background:rgba(0,76,84,.48);left:62%;top:70%;animation:bokehFloat2 17s ease-in-out infinite -8s;"></div>
+  <div class="bokeh" style="width:23px;height:23px;background:rgba(232,24,40,.42);left:92%;top:86%;animation:bokehFloat1 16s ease-in-out infinite -11s;"></div>
+  <div class="bokeh" style="width:17px;height:17px;background:rgba(14,42,102,.48);left:3%;top:98%;animation:bokehFloat2 21s ease-in-out infinite -14s;"></div>
+  <div class="bokeh" style="width:25px;height:25px;background:rgba(0,76,84,.42);left:78%;top:94%;animation:bokehFloat3 18s ease-in-out infinite -7.5s;"></div>
+  <!-- second wave -->
+  <div class="bokeh" style="width:29px;height:29px;background:rgba(232,24,40,.50);left:12%;top:72%;animation:bokehFloat2 15s ease-in-out infinite -5s;"></div>
+  <div class="bokeh" style="width:21px;height:21px;background:rgba(14,42,102,.52);left:30%;top:88%;animation:bokehFloat1 17s ease-in-out infinite -9s;"></div>
+  <div class="bokeh" style="width:32px;height:32px;background:rgba(0,76,84,.40);left:48%;top:76%;animation:bokehFloat3 21s ease-in-out infinite -11s;"></div>
+  <div class="bokeh" style="width:18px;height:18px;background:rgba(232,24,40,.55);left:65%;top:93%;animation:bokehFloat1 13s ease-in-out infinite -3.5s;"></div>
+  <div class="bokeh" style="width:26px;height:26px;background:rgba(14,42,102,.44);left:82%;top:84%;animation:bokehFloat2 19s ease-in-out infinite -13s;"></div>
+  <div class="bokeh" style="width:20px;height:20px;background:rgba(0,76,84,.52);left:95%;top:96%;animation:bokehFloat3 14s ease-in-out infinite -6.5s;"></div>
+  <div class="bokeh" style="width:24px;height:24px;background:rgba(232,24,40,.46);left:5%;top:80%;animation:bokehFloat3 16s ease-in-out infinite -8.5s;"></div>
+  <div class="bokeh" style="width:34px;height:34px;background:rgba(14,42,102,.38);left:35%;top:68%;animation:bokehFloat1 23s ease-in-out infinite -15s;"></div>
+  <div class="bokeh" style="width:17px;height:17px;background:rgba(0,76,84,.48);left:52%;top:97%;animation:bokehFloat2 15s ease-in-out infinite -4.5s;"></div>
+  <div class="bokeh" style="width:27px;height:27px;background:rgba(232,24,40,.44);left:73%;top:74%;animation:bokehFloat3 20s ease-in-out infinite -10.5s;"></div>
+  <div class="bokeh" style="width:22px;height:22px;background:rgba(14,42,102,.50);left:88%;top:90%;animation:bokehFloat1 18s ease-in-out infinite -7s;"></div>
+  <div class="bokeh" style="width:19px;height:19px;background:rgba(0,76,84,.46);left:18%;top:99%;animation:bokehFloat2 16s ease-in-out infinite -12.5s;"></div>
+</div>
 
 <div class="header-wrap">
   <div class="header"></div>
@@ -392,7 +662,7 @@ iframe{
       <img src="./website-ari-title.png" alt="Ari's Bar Mitzvah">
     </div>
 
-    <div class="event-divider">
+    <div class="event-divider" id="dividerTop">
       <svg width="320" height="5" viewBox="0 0 320 5"><ellipse cx="160" cy="2.5" rx="160" ry="2.5" fill="#E81828"/></svg>
       <svg width="220" height="3.5" viewBox="0 0 220 3.5"><ellipse cx="110" cy="1.75" rx="110" ry="1.75" fill="#004C54"/></svg>
     </div>
@@ -403,7 +673,7 @@ iframe{
       1101 Springdale Road • Cherry Hill, NJ 08003
     </div>
 
-    <div class="event-divider">
+    <div class="event-divider" id="dividerBottom">
       <svg width="220" height="3.5" viewBox="0 0 220 3.5"><ellipse cx="110" cy="1.75" rx="110" ry="1.75" fill="#004C54"/></svg>
       <svg width="320" height="5" viewBox="0 0 320 5"><ellipse cx="160" cy="2.5" rx="160" ry="2.5" fill="#E81828"/></svg>
     </div>
@@ -420,16 +690,22 @@ iframe{
 
 <div class="overlay-features">
   <div class="feature-card">
-    <img src="./logo-ari-phillies.png" alt="RSVP">
-    <button onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</button>
+    <div class="feature-card-inner" data-tilt>
+      <img src="./logo-ari-phillies.png" alt="RSVP">
+      <button onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</button>
+    </div>
   </div>
   <div class="feature-card">
-    <img src="./logo-ari-sixers.png" alt="FAQ">
-    <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
+    <div class="feature-card-inner" data-tilt>
+      <img src="./logo-ari-sixers.png" alt="FAQ">
+      <button onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</button>
+    </div>
   </div>
   <div class="feature-card">
-    <img src="./logo-eagles.png" alt="Mitzvah Project">
-    <button onclick="document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah Project</button>
+    <div class="feature-card-inner" data-tilt>
+      <img src="./logo-eagles.png" alt="Mitzvah Project">
+      <button onclick="document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah Project</button>
+    </div>
   </div>
 </div>
 
@@ -463,9 +739,9 @@ iframe{
             What should I wear?
             <span class="chev">⌄</span>
           </summary>
-          <div class="answer">
+          <div class="answer-wrap"><div class="answer"><div class="answer-inner">
             This is a dressy, fun event with so much to celebrate!  "Cocktail attire" is appropriate - suits, blazers, dresses, pantsuits, whatever you would wear to a party! Be ready to dance. At the service, shoulders should be covered with a shirt, sweater or shawl. There will be a basket of yarmulkes outside the sanctuary - traditionally men often choose to wear them; anyone is welcome to wear one but it's certainly not required.
-          </div>
+          </div></div></div>
         </details>
 
         <details>
@@ -473,9 +749,9 @@ iframe{
             What's the overall schedule?
             <span class="chev">⌄</span>
           </summary>
-          <div class="answer">
+          <div class="answer-wrap"><div class="answer"><div class="answer-inner">
             Please arrive promptly at 5:30pm so everyone can be settled and ready for the service to begin. If you need to arrive late, we understand.  You can come in quietly and sit in the back and that is not a problem. The service will be followed by a cocktail hour and games for the kids, then dinner and dancing the night away!
-          </div>
+          </div></div></div>
         </details>
 
         <details>
@@ -483,9 +759,9 @@ iframe{
             When do I pick up my child?
             <span class="chev">⌄</span>
           </summary>
-          <div class="answer">
+          <div class="answer-wrap"><div class="answer"><div class="answer-inner">
             The party will end at 11pm. We understand this is late, but hope you can party until the end! Please have your child let us know if you are picking up early so we don't worry!
-          </div>
+          </div></div></div>
         </details>
 
         <details>
@@ -493,9 +769,9 @@ iframe{
             Where do I book a hotel?
             <span class="chev">⌄</span>
           </summary>
-          <div class="answer">
+          <div class="answer-wrap"><div class="answer"><div class="answer-inner">
             For your convenience, we have a hotel block reserved nearby at SpringHill Suites in Voorhees NJ <a href="https://bit.ly/AriHotel">(click here to reserve)</a>. Of course, please feel free to stay anywhere else you'd like, there are a number of good options nearby. We appreciate you traveling in!
-          </div>
+          </div></div></div>
         </details>
 
         <details>
@@ -503,9 +779,9 @@ iframe{
             Phones?
             <span class="chev">⌄</span>
           </summary>
-          <div class="answer">
-            Please silence all phones and watches and refrain from using devices during the service.  Please don't take photos during the service, but they're definitely encouraged during the party and we'd love to see your best shots!
-          </div>
+          <div class="answer-wrap"><div class="answer"><div class="answer-inner">
+            Please silence all phones and watches and refrain from using devices during the service. Please don't take photos during the service, but they're definitely encouraged during the party and we'd love to see your best shots!
+          </div></div></div>
         </details>
 
         <details>
@@ -513,9 +789,9 @@ iframe{
             Other questions?
             <span class="chev">⌄</span>
           </summary>
-          <div class="answer">
+          <div class="answer-wrap"><div class="answer"><div class="answer-inner">
             If there are any other questions we have neglected to cover, please text or email us!
-          </div>
+          </div></div></div>
         </details>
       </div>
 
@@ -548,8 +824,15 @@ iframe{
 
 </section>
 
+<!-- #9: Sticky floating nav pill -->
+<nav class="floating-nav" id="floatingNav">
+  <a href="#rsvp" onclick="event.preventDefault();document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</a>
+  <a href="#faq" onclick="event.preventDefault();document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</a>
+  <a href="#mitzvah" onclick="event.preventDefault();document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah</a>
+</nav>
+
 <script>
-/* Rotation shared between hero and docked */
+/* ═══ Rotation shared between hero and docked ═══ */
 const heroSlides = document.querySelectorAll('#heroRotator img');
 const dockedSlides = document.querySelectorAll('#dockedRotator img');
 let current = 0;
@@ -574,7 +857,7 @@ requestAnimationFrame(()=>{
 
 setInterval(rotateSlides, ROTATE_MS);
 
-/* Clean docking: desktop only, toggles display so it pushes FAQ down */
+/* ═══ Clean docking: desktop only ═══ */
 const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
 if (!isMobile) {
@@ -613,6 +896,78 @@ if (!isMobile) {
 
   observer.observe(heroSection);
 }
+
+/* ═══ #9: Floating nav pill — show after hero scrolls away ═══ */
+(function(){
+  const nav = document.getElementById('floatingNav');
+  const hero = document.getElementById('hero');
+  const navObs = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting){
+        nav.classList.add('visible');
+      } else {
+        nav.classList.remove('visible');
+      }
+    });
+  },{threshold:0.05});
+  navObs.observe(hero);
+})();
+
+/* ═══ #12: Animate swoosh dividers on scroll into view ═══ */
+(function(){
+  const dividers = document.querySelectorAll('.event-divider');
+  const swooshObs = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('swoosh-visible');
+        swooshObs.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.5});
+  dividers.forEach(d=>swooshObs.observe(d));
+})();
+
+/* ═══ #13: 3D tilt on feature cards ═══ */
+(function(){
+  const cards = document.querySelectorAll('[data-tilt]');
+  cards.forEach(card=>{
+    card.addEventListener('mousemove', e=>{
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const rotateY = ((x - cx) / cx) * 12;
+      const rotateX = ((cy - y) / cy) * 12;
+      card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+    });
+    card.addEventListener('mouseleave', ()=>{
+      card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) scale(1)';
+    });
+  });
+})();
+
+/* ═══ #3: FAQ smooth open/close — prevent default snap and let grid animate ═══ */
+(function(){
+  document.querySelectorAll('.faq details').forEach(detail=>{
+    const wrap = detail.querySelector('.answer-wrap');
+    detail.addEventListener('click', e=>{
+      if(e.target.closest('a')) return; /* let links work */
+      /* If closing, animate first then remove open */
+      if(detail.open && !detail.classList.contains('closing')){
+        e.preventDefault();
+        detail.classList.add('closing');
+        wrap.style.gridTemplateRows = '0fr';
+        wrap.addEventListener('transitionend', function handler(){
+          detail.open = false;
+          detail.classList.remove('closing');
+          wrap.style.gridTemplateRows = '';
+          wrap.removeEventListener('transitionend', handler);
+        }, {once:true});
+      }
+    });
+  });
+})();
 </script>
 
 </body>
