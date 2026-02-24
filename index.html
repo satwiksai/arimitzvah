@@ -302,8 +302,9 @@ a, button, summary, .feature-card{
 }
 
 .feature-card img{
+  width:clamp(130px,12vw,190px);
   height:clamp(130px,12vw,190px);
-  width:auto;
+  object-fit:contain;
 }
 
 .feature-card button{
@@ -576,7 +577,7 @@ iframe{
     gap:24px;
   }
 
-  .feature-card img{height:90px;}
+  .feature-card img{width:90px;height:90px;}
   .feature-card button{padding:10px 22px;font-size:13px;}
 
   .content{grid-template-columns:1fr;gap:40px;}
