@@ -930,7 +930,7 @@ iframe{
   <a href="#faq" onclick="event.preventDefault();document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</a>
   <a href="#mitzvah" onclick="event.preventDefault();document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah</a>
   <div class="nav-sep"></div>
-  <span class="countdown-mini" id="navCountdown">--d --h --m</span>
+  <span class="countdown-mini" id="navCountdown">--d --h --m --s</span>
 </nav>
 
 <script>
@@ -1095,7 +1095,7 @@ if (!isMobile) {
     $h.textContent = pad(hrs);
     $m.textContent = pad(min);
     $s.textContent = pad(sec);
-    $nav.textContent = days + 'd ' + pad(hrs) + 'h ' + pad(min) + 'm';
+    $nav.textContent = days + 'd ' + pad(hrs) + 'h ' + pad(min) + 'm ' + pad(sec) + 's';
   }
   tick();
   setInterval(tick, 1000);
