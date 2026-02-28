@@ -122,72 +122,7 @@ a, button, summary, .feature-card{
   right:0;
   z-index:50;
 }
-
-.header{
-  background:var(--blue);
-  height:55px;
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  padding:0 24px;
-}
-
-/* Countdown in header */
-.countdown{
-  font-family:'Montserrat',sans-serif;
-  font-weight:700;
-  font-size:13px;
-  letter-spacing:.5px;
-  color:rgba(255,255,255,.9);
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-
-.countdown .cd-unit{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  line-height:1.1;
-}
-
-.countdown .cd-num{
-  font-size:18px;
-  color:white;
-}
-
-.countdown .cd-label{
-  font-size:8px;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.55);
-}
-
-.countdown .cd-sep{
-  font-size:16px;
-  color:rgba(255,255,255,.3);
-  margin-top:-6px;
-}
-
-/* Countdown in floating nav */
-.countdown-mini{
-  font-family:'Montserrat',sans-serif;
-  font-weight:700;
-  font-size:11px;
-  letter-spacing:.3px;
-  color:rgba(255,255,255,.75);
-  padding:6px 14px;
-  white-space:nowrap;
-}
-
-.floating-nav .nav-sep{
-  width:1px;
-  height:20px;
-  background:rgba(255,255,255,.18);
-  flex:0 0 auto;
-  align-self:center;
-}
-
+.header{background:var(--blue);height:55px;}
 .stripes{
   height:36px;
   background:
@@ -581,7 +516,6 @@ iframe{
   transform:translateX(-50%) translateY(80px);
   z-index:100;
   display:flex;
-  align-items:center;
   gap:6px;
   padding:8px 10px;
   background: linear-gradient(135deg, rgba(14,42,102,.88), rgba(14,42,102,.92));
@@ -675,20 +609,6 @@ iframe{
     font-size:11px;
     padding:7px 14px;
   }
-
-  .countdown{
-      font-size:10px;
-      gap:8px;
-      padding-right:4px;
-    }
-    .countdown .cd-num{ font-size:13px; }
-    .countdown .cd-label{ font-size:6px; }
-    .countdown .cd-sep{ font-size:12px; }
-    .countdown-mini{
-      font-size:9px;
-      padding:5px 8px;
-    }
-
 }
 </style>
 </head>
@@ -728,16 +648,7 @@ iframe{
 </div>
 
 <div class="header-wrap">
-  <div class="header">
-    <div class="countdown" id="headerCountdown" aria-label="Countdown to Ari's Bar Mitzvah">
-      <div class="cd-unit"><span class="cd-num" id="cdDays">--</span><span class="cd-label">Days</span></div>
-      <span class="cd-sep">:</span>
-      <div class="cd-unit"><span class="cd-num" id="cdHrs">--</span><span class="cd-label">Hrs</span></div>
-      <span class="cd-sep">:</span>
-      <div class="cd-unit"><span class="cd-num" id="cdMin">--</span><span class="cd-label">Min</span></div>
-      <span class="cd-sep">:</span>
-      <div class="cd-unit"><span class="cd-num" id="cdSec">--</span><span class="cd-label">Sec</span></div>
-    </div>
+  <div class="header"></div>
   <div class="stripes"></div>
   <div class="header-logo">
     <img src="./logo-AS-white.png" alt="AS Logo">
@@ -919,8 +830,6 @@ iframe{
   <a href="#rsvp" onclick="event.preventDefault();document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP</a>
   <a href="#faq" onclick="event.preventDefault();document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</a>
   <a href="#mitzvah" onclick="event.preventDefault();document.getElementById('mitzvah').scrollIntoView({behavior:'smooth'})">Mitzvah</a>
-  <div class="nav-sep"></div>
-  <span class="countdown-mini" id="navCountdown">--d --h --m</span>
 </nav>
 
 <script>
@@ -1060,38 +969,6 @@ if (!isMobile) {
     });
   });
 })();
-
-/* Countdown timer — May 9 2026 5:30 PM ET */
-(function(){
-  const target = new Date('2026-05-09T17:30:00-04:00').getTime();
-  const $d = document.getElementById('cdDays');
-  const $h = document.getElementById('cdHrs');
-  const $m = document.getElementById('cdMin');
-  const $s = document.getElementById('cdSec');
-  const $nav = document.getElementById('navCountdown');
-  const pad = n => String(n).padStart(2,'0');
-
-  function tick(){
-    const diff = target - Date.now();
-    if(diff <= 0){
-      $d.textContent = '0'; $h.textContent = '00'; $m.textContent = '00'; $s.textContent = '00';
-      $nav.textContent = "It's time! 🎉";
-      return;
-    }
-    const days = Math.floor(diff / 86400000);
-    const hrs  = Math.floor((diff % 86400000) / 3600000);
-    const min  = Math.floor((diff % 3600000) / 60000);
-    const sec  = Math.floor((diff % 60000) / 1000);
-    $d.textContent = days;
-    $h.textContent = pad(hrs);
-    $m.textContent = pad(min);
-    $s.textContent = pad(sec);
-    $nav.textContent = days + 'd ' + pad(hrs) + 'h ' + pad(min) + 'm';
-  }
-  tick();
-  setInterval(tick, 1000);
-})();
-
 </script>
 
 </body>
